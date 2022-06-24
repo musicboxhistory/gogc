@@ -34,7 +34,9 @@ func GetEquipmentStatus(c *gin.Context) {
 	nfType = strings.ToLower(nfType)
 	ok := common.CheckNftype(nfType)
 	if !ok {
+		logger.Error("NF Type Error")
 		c.JSON(http.StatusBadRequest, gin.H{})
+		return
 	}
 
 	// Call Scenario Function
@@ -52,6 +54,40 @@ func PostEquipmentStatus(c *gin.Context) {
 
 	logger.Snap("PostEquipmentStatus START")
 	defer logger.Snap("PostEquipmentStatus END")
+
+	// Variable Declaration
+	var input []equipmentstatus.EquipmentStatus
+
+	// Get Path Parameter
+	nfType := c.Param("nfType")
+
+	// Check NF Type
+	nfType = strings.ToLower(nfType)
+	logger.Snap("nfType:%v", nfType)
+	ok := common.CheckNftype(nfType)
+	if !ok {
+		logger.Error("NF Type Error")
+		c.JSON(http.StatusBadRequest, gin.H{})
+		return
+	}
+
+	// Get Json Request
+	err := c.ShouldBindJSON(&input)
+	if err != nil {
+		logger.Error("err:%v", err)
+		c.JSON(http.StatusBadRequest, gin.H{})
+		return
+	}
+	logger.Snap("input:%#+v", input)
+
+	// Call Scenario Function
+	err = equipmentstatus.Post(nfType, input)
+
+	if err == nil {
+		c.JSON(http.StatusOK, input)
+	} else {
+		c.JSON(http.StatusNotFound, gin.H{})
+	}
 }
 
 // PutEquipmentStatus - Retrieves the status of the UE

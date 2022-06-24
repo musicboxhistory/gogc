@@ -10,6 +10,7 @@
 package main
 
 import (
+	"gogc/src/common/db"
 	sw "gogc/src/station/handler"
 	"log"
 	"os"
@@ -20,6 +21,7 @@ func main() {
 
 	// Init
 	router := sw.NewRouter()
+	db.Init()
 
 	port := os.Getenv("ENV_DATABASE_PORT")
 	if port == "" {

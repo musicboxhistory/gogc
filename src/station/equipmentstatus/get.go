@@ -7,7 +7,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 )
 
-func Get(nfType string) (interface{}, error) {
+func Get(nfType string) ([]interface{}, error) {
 
 	logger.Snap("Get EquipmentStatus Station START")
 	defer logger.Snap("Get EquipmentStatus Station END")

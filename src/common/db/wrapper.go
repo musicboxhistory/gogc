@@ -32,9 +32,9 @@ func Close() error {
 	return nil
 }
 
-func FindOne(database string, collection string, filter interface{}, opts ...*options.FindOneOptions) (RespData, error) {
+func FindOne(database string, collection string, filter interface{}, opts ...*options.FindOneOptions) (interface{}, error) {
 
-	var result RespData
+	var result interface{}
 
 	coll := client.Database(database).Collection(collection)
 	err := coll.FindOne(context.TODO(), filter, opts...).Decode(&result)
@@ -45,10 +45,9 @@ func FindOne(database string, collection string, filter interface{}, opts ...*op
 	return result, nil
 }
 
-func Find(database string, collection string, filter interface{}, opts ...*options.FindOptions) ([]RespData, error) {
+func Find(database string, collection string, filter interface{}, opts ...*options.FindOptions) ([]interface{}, error) {
 
-	var result []RespData
-
+	var result []interface{}
 	coll := client.Database(database).Collection(collection)
 	cur, err := coll.Find(context.TODO(), filter, opts...)
 	if err != nil {
