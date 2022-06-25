@@ -22,32 +22,30 @@ import (
 // GetOneEquipmentStatus - Retrieves the status of the UE
 func GetOneEquipmentStatus(c *gin.Context) {
 
-        logger.Snap("GetOneEquipmentStatus START")
-        defer logger.Snap("GetOneEquipmentStatus END")
+	logger.Snap("GetOneEquipmentStatus START")
+	defer logger.Snap("GetOneEquipmentStatus END")
 
-        // Variable Declaration
-
-        // Get Path Parameter
-        nfType := c.Param("nfType")
+	// Get Path Parameter
+	nfType := c.Param("nfType")
 	key := c.Param("key")
 
-        // Check NF Type
-        nfType = strings.ToLower(nfType)
-        ok := common.CheckNftype(nfType)
-        if !ok {
-                logger.Error("NF Type Error")
-                c.JSON(http.StatusBadRequest, gin.H{})
-                return
-        }
+	// Check NF Type
+	nfType = strings.ToLower(nfType)
+	ok := common.CheckNftype(nfType)
+	if !ok {
+		logger.Error("NF Type Error")
+		c.JSON(http.StatusBadRequest, gin.H{})
+		return
+	}
 
-        // Call Scenario Function
-        response, err := equipmentstatus.GetOne(nfType, key)
+	// Call Scenario Function
+	response, err := equipmentstatus.GetOne(nfType, key)
 
-        if err == nil {
-                c.JSON(http.StatusOK, response)
-        } else {
-                c.JSON(http.StatusNotFound, gin.H{})
-        }
+	if err == nil {
+		c.JSON(http.StatusOK, response)
+	} else {
+		c.JSON(http.StatusNotFound, gin.H{})
+	}
 }
 
 // GetEquipmentStatus - Retrieves the status of the UE
@@ -55,8 +53,6 @@ func GetEquipmentStatus(c *gin.Context) {
 
 	logger.Snap("GetEquipmentStatus START")
 	defer logger.Snap("GetEquipmentStatus END")
-
-	// Variable Declaration
 
 	// Get Path Parameter
 	nfType := c.Param("nfType")
@@ -115,9 +111,9 @@ func PostEquipmentStatus(c *gin.Context) {
 	err = equipmentstatus.Post(nfType, request)
 
 	if err == nil {
-		c.JSON(http.StatusOK, request)
+		c.JSON(http.StatusCreated, request)
 	} else {
-		c.JSON(http.StatusNotFound, gin.H{})
+		c.JSON(http.StatusBadRequest, gin.H{})
 	}
 }
 
@@ -133,4 +129,26 @@ func DeleteEquipmentStatus(c *gin.Context) {
 
 	logger.Snap("DeleteEquipmentStatus START")
 	defer logger.Snap("DeleteEquipmentStatus END")
+
+	// Get Path Parameter
+	nfType := c.Param("nfType")
+	key := c.Param("key")
+
+	// Check NF Type
+	nfType = strings.ToLower(nfType)
+	ok := common.CheckNftype(nfType)
+	if !ok {
+		logger.Error("NF Type Error")
+		c.JSON(http.StatusBadRequest, gin.H{})
+		return
+	}
+
+	// Call Scenario Function
+	err := equipmentstatus.Delete(nfType, key)
+
+	if err == nil {
+		c.JSON(http.StatusNoContent, gin.H{})
+	} else {
+		c.JSON(http.StatusNotFound, gin.H{})
+	}
 }

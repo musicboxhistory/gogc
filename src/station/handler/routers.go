@@ -64,12 +64,12 @@ var routes = Routes{
 		Index,
 	},
 
-        {
-                "GetOneEquipmentStatus",
-                http.MethodGet,
-                "/station/v1/equipmentstatus/:nfType/:key",
-                GetOneEquipmentStatus,
-        },
+	{
+		"GetOneEquipmentStatus",
+		http.MethodGet,
+		"/station/v1/equipmentstatus/:nfType/:key",
+		GetOneEquipmentStatus,
+	},
 
 	{
 		"GetEquipmentStatus",
@@ -95,7 +95,7 @@ var routes = Routes{
 	{
 		"DeleteEquipmentStatus",
 		http.MethodDelete,
-		"/station/v1/equipmentstatus/:nfType",
+		"/station/v1/equipmentstatus/:nfType/:key",
 		DeleteEquipmentStatus,
 	},
 }
