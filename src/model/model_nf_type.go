@@ -9,6 +9,57 @@
 
 package model
 
-// NfType - NF types known to NRF
-type NfType struct {
-}
+type NfType string
+
+// List of NfTypeAnyOf
+const (
+	NRF NfType = "NRF"
+	UDM NfType = "UDM"
+	AMF NfType = "AMF"
+	SMF NfType = "SMF"
+	AUSF NfType = "AUSF"
+	NEF NfType = "NEF"
+	PCF NfType = "PCF"
+	SMSF NfType = "SMSF"
+	NSSF NfType = "NSSF"
+	UDR NfType = "UDR"
+	LMF NfType = "LMF"
+	GMLC NfType = "GMLC"
+	EIR NfType = "5G_EIR"
+	SEPP NfType = "SEPP"
+	UPF NfType = "UPF"
+	N3_IWF NfType = "N3IWF"
+	AF NfType = "AF"
+	UDSF NfType = "UDSF"
+	BSF NfType = "BSF"
+	CHF NfType = "CHF"
+	NWDAF NfType = "NWDAF"
+	PCSCF NfType = "PCSCF"
+	CBCF NfType = "CBCF"
+	HSS NfType = "HSS"
+	UCMF NfType = "UCMF"
+	SOR_AF NfType = "SOR_AF"
+	SPAF NfType = "SPAF"
+	MME NfType = "MME"
+	SCSAS NfType = "SCSAS"
+	SCEF NfType = "SCEF"
+	SCP NfType = "SCP"
+	NSSAAF NfType = "NSSAAF"
+	ICSCF NfType = "ICSCF"
+	SCSCF NfType = "SCSCF"
+	DRA NfType = "DRA"
+	IMS_AS NfType = "IMS_AS"
+	AANF NfType = "AANF"
+	_5_G_DDNMF NfType = "5G_DDNMF"
+	NSACF NfType = "NSACF"
+	MFAF NfType = "MFAF"
+	EASDF NfType = "EASDF"
+	DCCF NfType = "DCCF"
+	MB_SMF NfType = "MB-SMF"
+	TSCTSF NfType = "TSCTSF"
+	ADRF NfType = "ADRF"
+	GBA_BSF NfType = "GBA_BSF"
+	CEF NfType = "CEF"
+	MB_UPF NfType = "MB-UPF"
+	NSWOF NfType = "NSWOF"
+)

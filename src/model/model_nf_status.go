@@ -9,6 +9,11 @@
 
 package model
 
-// NfStatus - Status of a given NF Instance stored in NRF
-type NfStatus struct {
-}
+type NfStatus string
+
+// List of NfStatus
+const (
+	REGISTERED NfStatus = "REGISTERED"
+	SUSPENDED NfStatus = "SUSPENDED"
+	UNDISCOVERABLE NfStatus = "UNDISCOVERABLE"
+)

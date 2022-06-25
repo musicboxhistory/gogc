@@ -23,7 +23,7 @@ func main() {
 	scenario.Init()
 	router := sw.NewRouter()
 
-	port := os.Getenv("ENV_5GEIR_EQUIPMENTIDENTITYCHECK")
+	port := os.Getenv("ENV_5GEIR_EQUIPMENTIDENTITYCHECK_PORT")
 	if port == "" {
 		port = "8081"
 	}

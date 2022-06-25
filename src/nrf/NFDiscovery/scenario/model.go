@@ -3,11 +3,11 @@ package scenario
 // Cause
 const (
 	MandatoryIeIncorrect = "MANDATORY_IE_INCORRECT"
-	EquipmentUnknown     = "ERROR_EQUIPMENT_UNKNOWN"
+	TargetUnknown        = "SEARCH_RESULT_NOT_FOUND"
 )
 
 // Detail
 const (
 	ErrorDetailMandatoryIeIncorrect = "Mandatory parameters not set"
-	ErrorDetailEquipmentUnknown     = "The number is not registered"
+	ErrorDetailTargetUnknown        = "Not found in query parameters"
 )

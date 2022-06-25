@@ -19,112 +19,112 @@ type NfProfile struct {
 	// String uniquely identifying a NF instance. The format of the NF Instance ID shall be a  Universally Unique Identifier (UUID) version 4, as described in IETF RFC 4122.  
 	NfInstanceId string `json:"nfInstanceId"`
 
-	NfInstanceName string `json:"nfInstanceName,omitempty"`
+	NfInstanceName *string `json:"nfInstanceName,omitempty"`
 
 	NfType NfType `json:"nfType"`
 
 	NfStatus NfStatus `json:"nfStatus"`
 
-	CollocatedNfInstances []CollocatedNfInstance `json:"collocatedNfInstances,omitempty"`
+	CollocatedNfInstances *[]CollocatedNfInstance `json:"collocatedNfInstances,omitempty"`
 
-	HeartBeatTimer int32 `json:"heartBeatTimer,omitempty"`
+	HeartBeatTimer *int32 `json:"heartBeatTimer,omitempty"`
 
-	PlmnList []PlmnId `json:"plmnList,omitempty"`
+	PlmnList *[]PlmnId `json:"plmnList,omitempty"`
 
-	SnpnList []PlmnIdNid `json:"snpnList,omitempty"`
+	SnpnList *[]PlmnIdNid `json:"snpnList,omitempty"`
 
-	SNssais []ExtSnssai `json:"sNssais,omitempty"`
+	SNssais *[]ExtSnssai `json:"sNssais,omitempty"`
 
-	PerPlmnSnssaiList []PlmnSnssai `json:"perPlmnSnssaiList,omitempty"`
+	PerPlmnSnssaiList *[]PlmnSnssai `json:"perPlmnSnssaiList,omitempty"`
 
-	NsiList []string `json:"nsiList,omitempty"`
-
-	// Fully Qualified Domain Name
-	Fqdn string `json:"fqdn,omitempty"`
+	NsiList *[]string `json:"nsiList,omitempty"`
 
 	// Fully Qualified Domain Name
-	InterPlmnFqdn string `json:"interPlmnFqdn,omitempty"`
+	Fqdn *string `json:"fqdn,omitempty"`
 
-	Ipv4Addresses []string `json:"ipv4Addresses,omitempty"`
+	// Fully Qualified Domain Name
+	InterPlmnFqdn *string `json:"interPlmnFqdn,omitempty"`
 
-	Ipv6Addresses []Ipv6Addr `json:"ipv6Addresses,omitempty"`
+	Ipv4Addresses *[]string `json:"ipv4Addresses,omitempty"`
 
-	AllowedPlmns []PlmnId `json:"allowedPlmns,omitempty"`
+	Ipv6Addresses *[]Ipv6Addr `json:"ipv6Addresses,omitempty"`
 
-	AllowedSnpns []PlmnIdNid `json:"allowedSnpns,omitempty"`
+	AllowedPlmns *[]PlmnId `json:"allowedPlmns,omitempty"`
 
-	AllowedNfTypes []NfType `json:"allowedNfTypes,omitempty"`
+	AllowedSnpns *[]PlmnIdNid `json:"allowedSnpns,omitempty"`
 
-	AllowedNfDomains []string `json:"allowedNfDomains,omitempty"`
+	AllowedNfTypes *[]NfType `json:"allowedNfTypes,omitempty"`
 
-	AllowedNssais []ExtSnssai `json:"allowedNssais,omitempty"`
+	AllowedNfDomains *[]string `json:"allowedNfDomains,omitempty"`
 
-	Priority int32 `json:"priority,omitempty"`
+	AllowedNssais *[]ExtSnssai `json:"allowedNssais,omitempty"`
 
-	Capacity int32 `json:"capacity,omitempty"`
+	Priority *int32 `json:"priority,omitempty"`
 
-	Load int32 `json:"load,omitempty"`
+	Capacity *int32 `json:"capacity,omitempty"`
+
+	Load *int32 `json:"load,omitempty"`
 
 	// string with format 'date-time' as defined in OpenAPI.
-	LoadTimeStamp time.Time `json:"loadTimeStamp,omitempty"`
+	LoadTimeStamp *time.Time `json:"loadTimeStamp,omitempty"`
 
-	Locality string `json:"locality,omitempty"`
+	Locality *string `json:"locality,omitempty"`
 
-	UdrInfo UdrInfo `json:"udrInfo,omitempty"`
+	UdrInfo *UdrInfo `json:"udrInfo,omitempty"`
 
 	// A map (list of key-value pairs) where a (unique) valid JSON string serves as key of UdrInfo
 	UdrInfoList map[string]UdrInfo `json:"udrInfoList,omitempty"`
 
-	UdmInfo UdmInfo `json:"udmInfo,omitempty"`
+	UdmInfo *UdmInfo `json:"udmInfo,omitempty"`
 
 	// A map (list of key-value pairs) where a (unique) valid JSON string serves as key of UdmInfo
 	UdmInfoList map[string]UdmInfo `json:"udmInfoList,omitempty"`
 
-	AusfInfo AusfInfo `json:"ausfInfo,omitempty"`
+	AusfInfo *AusfInfo `json:"ausfInfo,omitempty"`
 
 	// A map (list of key-value pairs) where a (unique) valid JSON string serves as key of AusfInfo
 	AusfInfoList map[string]AusfInfo `json:"ausfInfoList,omitempty"`
 
-	AmfInfo AmfInfo `json:"amfInfo,omitempty"`
+	AmfInfo *AmfInfo `json:"amfInfo,omitempty"`
 
 	// A map (list of key-value pairs) where a (unique) valid JSON string serves as key of AmfInfo
 	AmfInfoList map[string]AmfInfo `json:"amfInfoList,omitempty"`
 
-	SmfInfo SmfInfo `json:"smfInfo,omitempty"`
+	SmfInfo *SmfInfo `json:"smfInfo,omitempty"`
 
 	// A map (list of key-value pairs) where a (unique) valid JSON string serves as key of SmfInfo
 	SmfInfoList map[string]SmfInfo `json:"smfInfoList,omitempty"`
 
-	UpfInfo UpfInfo `json:"upfInfo,omitempty"`
+	UpfInfo *UpfInfo `json:"upfInfo,omitempty"`
 
 	// A map (list of key-value pairs) where a (unique) valid JSON string serves as key of UpfInfo
 	UpfInfoList map[string]UpfInfo `json:"upfInfoList,omitempty"`
 
-	PcfInfo PcfInfo `json:"pcfInfo,omitempty"`
+	PcfInfo *PcfInfo `json:"pcfInfo,omitempty"`
 
 	// A map (list of key-value pairs) where a (unique) valid JSON string serves as key of PcfInfo
 	PcfInfoList map[string]PcfInfo `json:"pcfInfoList,omitempty"`
 
-	BsfInfo BsfInfo `json:"bsfInfo,omitempty"`
+	BsfInfo *BsfInfo `json:"bsfInfo,omitempty"`
 
 	// A map (list of key-value pairs) where a (unique) valid JSON string serves as key of BsfInfo
 	BsfInfoList map[string]BsfInfo `json:"bsfInfoList,omitempty"`
 
-	ChfInfo ChfInfo `json:"chfInfo,omitempty"`
+	ChfInfo *ChfInfo `json:"chfInfo,omitempty"`
 
 	// A map (list of key-value pairs) where a (unique) valid JSON string serves as key of ChfInfo
 	ChfInfoList map[string]ChfInfo `json:"chfInfoList,omitempty"`
 
-	NefInfo NefInfo `json:"nefInfo,omitempty"`
+	NefInfo *NefInfo `json:"nefInfo,omitempty"`
 
-	NrfInfo NrfInfo `json:"nrfInfo,omitempty"`
+	NrfInfo *NrfInfo `json:"nrfInfo,omitempty"`
 
-	UdsfInfo UdsfInfo `json:"udsfInfo,omitempty"`
+	UdsfInfo *UdsfInfo `json:"udsfInfo,omitempty"`
 
 	// A map (list of key-value pairs) where a (unique) valid JSON string serves as key of UdsfInfo
 	UdsfInfoList map[string]UdsfInfo `json:"udsfInfoList,omitempty"`
 
-	NwdafInfo NwdafInfo `json:"nwdafInfo,omitempty"`
+	NwdafInfo *NwdafInfo `json:"nwdafInfo,omitempty"`
 
 	// A map (list of key-value pairs) where a valid JSON string serves as key
 	NwdafInfoList map[string]NwdafInfo `json:"nwdafInfoList,omitempty"`
@@ -138,33 +138,33 @@ type NfProfile struct {
 	CustomInfo map[string]interface{} `json:"customInfo,omitempty"`
 
 	// string with format 'date-time' as defined in OpenAPI.
-	RecoveryTime time.Time `json:"recoveryTime,omitempty"`
+	RecoveryTime *time.Time `json:"recoveryTime,omitempty"`
 
-	NfServicePersistence bool `json:"nfServicePersistence,omitempty"`
+	NfServicePersistence *bool `json:"nfServicePersistence,omitempty"`
 
 	// Deprecated
-	NfServices []NfService `json:"nfServices,omitempty"`
+	NfServices *[]NfService `json:"nfServices,omitempty"`
 
 	// A map (list of key-value pairs) where serviceInstanceId serves as key of NFService
 	NfServiceList map[string]NfService `json:"nfServiceList,omitempty"`
 
-	NfProfileChangesSupportInd bool `json:"nfProfileChangesSupportInd,omitempty"`
+	NfProfileChangesSupportInd *bool `json:"nfProfileChangesSupportInd,omitempty"`
 
-	NfProfileChangesInd bool `json:"nfProfileChangesInd,omitempty"`
+	NfProfileChangesInd *bool `json:"nfProfileChangesInd,omitempty"`
 
-	DefaultNotificationSubscriptions []DefaultNotificationSubscription `json:"defaultNotificationSubscriptions,omitempty"`
+	DefaultNotificationSubscriptions *[]DefaultNotificationSubscription `json:"defaultNotificationSubscriptions,omitempty"`
 
-	LmfInfo LmfInfo `json:"lmfInfo,omitempty"`
+	LmfInfo *LmfInfo `json:"lmfInfo,omitempty"`
 
-	GmlcInfo GmlcInfo `json:"gmlcInfo,omitempty"`
+	GmlcInfo *GmlcInfo `json:"gmlcInfo,omitempty"`
 
-	NfSetIdList []string `json:"nfSetIdList,omitempty"`
+	NfSetIdList *[]string `json:"nfSetIdList,omitempty"`
 
-	ServingScope []string `json:"servingScope,omitempty"`
+	ServingScope *[]string `json:"servingScope,omitempty"`
 
-	LcHSupportInd bool `json:"lcHSupportInd,omitempty"`
+	LcHSupportInd *bool `json:"lcHSupportInd,omitempty"`
 
-	OlcHSupportInd bool `json:"olcHSupportInd,omitempty"`
+	OlcHSupportInd *bool `json:"olcHSupportInd,omitempty"`
 
 	// A map (list of key-value pairs) where NfSetId serves as key of DateTime
 	NfSetRecoveryTimeList map[string]time.Time `json:"nfSetRecoveryTimeList,omitempty"`
@@ -172,14 +172,14 @@ type NfProfile struct {
 	// A map (list of key-value pairs) where NfServiceSetId serves as key of DateTime
 	ServiceSetRecoveryTimeList map[string]time.Time `json:"serviceSetRecoveryTimeList,omitempty"`
 
-	ScpDomains []string `json:"scpDomains,omitempty"`
+	ScpDomains *[]string `json:"scpDomains,omitempty"`
 
-	ScpInfo ScpInfo `json:"scpInfo,omitempty"`
+	ScpInfo *ScpInfo `json:"scpInfo,omitempty"`
 
-	SeppInfo SeppInfo `json:"seppInfo,omitempty"`
+	SeppInfo *SeppInfo `json:"seppInfo,omitempty"`
 
 	// Vendor ID of the NF Service instance (Private Enterprise Number assigned by IANA)
-	VendorId string `json:"vendorId,omitempty"`
+	VendorId *string `json:"vendorId,omitempty"`
 
 	// the key of the map is the IANA-assigned SMI Network Management Private Enterprise Codes
 	SupportedVendorSpecificFeatures map[string][]VendorSpecificFeature `json:"supportedVendorSpecificFeatures,omitempty"`
@@ -187,14 +187,14 @@ type NfProfile struct {
 	// A map (list of key-value pairs) where a valid JSON string serves as key
 	AanfInfoList map[string]AanfInfo `json:"aanfInfoList,omitempty"`
 
-	Var5gDdnmfInfo Model5GDdnmfInfo `json:"5gDdnmfInfo,omitempty"`
+	Var5gDdnmfInfo *Model5GDdnmfInfo `json:"5gDdnmfInfo,omitempty"`
 
-	MfafInfo MfafInfo `json:"mfafInfo,omitempty"`
+	MfafInfo *MfafInfo `json:"mfafInfo,omitempty"`
 
 	// A map (list of key-value pairs) where a valid JSON string serves as key
 	EasdfInfoList map[string]EasdfInfo `json:"easdfInfoList,omitempty"`
 
-	DccfInfo DccfInfo `json:"dccfInfo,omitempty"`
+	DccfInfo *DccfInfo `json:"dccfInfo,omitempty"`
 
 	// A map (list of key-value pairs) where a (unique) valid JSON string serves as key of nsacfInfo
 	NsacfInfoList map[string]NsacfInfo `json:"nsacfInfoList,omitempty"`
@@ -208,9 +208,9 @@ type NfProfile struct {
 	// A map (list of key-value pairs) where a valid JSON string serves as key
 	MbUpfInfoList map[string]MbUpfInfo `json:"mbUpfInfoList,omitempty"`
 
-	TrustAfInfo TrustAfInfo `json:"trustAfInfo,omitempty"`
+	TrustAfInfo *TrustAfInfo `json:"trustAfInfo,omitempty"`
 
-	NssaafInfo NssaafInfo `json:"nssaafInfo,omitempty"`
+	NssaafInfo *NssaafInfo `json:"nssaafInfo,omitempty"`
 
 	HniList []string `json:"hniList,omitempty"`
 }

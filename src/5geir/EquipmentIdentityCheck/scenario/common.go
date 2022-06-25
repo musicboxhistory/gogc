@@ -27,7 +27,7 @@ func Init() {
 func GetDatabase() {
 
 	logger.Debug("GetDatabase START")
-        defer logger.Debug("GetDatabase END")
+	defer logger.Debug("GetDatabase END")
 
 	filter := bson.D{{}}
 	for {
@@ -66,28 +66,28 @@ func GetDatabase() {
 	}
 }
 
-func GetStatus(request EirRequestData) model.EquipmentStatus {
+func GetStatus(request map[string][]string) model.EquipmentStatus {
 
 	logger.Debug("GetStatus START")
-        defer logger.Debug("GetStatus END")
-	
+	defer logger.Debug("GetStatus END")
+
 	mutex.Lock()
 	defer mutex.Unlock()
 
 	for _, value := range equipmentStatusList {
 
 		// Check Pei
-		if value.Key == fmt.Sprintf("pei-%s", request.Pei) {
+		if request["pei"] != nil && value.Key == fmt.Sprintf("pei-%s", request["pei"][0]) {
 			return value.Status
 		}
 
 		// Check Supi
-		if value.Key == fmt.Sprintf("supi-%s", request.Supi) {
+		if request["supi"] != nil && value.Key == fmt.Sprintf("supi-%s", request["supi"][0]) {
 			return value.Status
 		}
 
 		// Check Gpsi
-		if value.Key == fmt.Sprintf("gpsi-%s", request.Gpsi) {
+		if request["gpsi"] != nil && value.Key == fmt.Sprintf("gpsi-%s", request["gpsi"][0]) {
 			return value.Status
 		}
 	}

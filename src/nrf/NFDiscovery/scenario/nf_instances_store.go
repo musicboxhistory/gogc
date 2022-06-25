@@ -7,27 +7,23 @@ import (
 	"net/http"
 )
 
-func GetEquipmentStatus(request map[string][]string) (interface{}, error) {
+func SearchNFInstances(request map[string][]string) (interface{}, error) {
 
 	logger.Debug("GetEquipmentStatus START")
 	defer logger.Debug("GetEquipmentStatus END")
 
-	// Variable Declaration
-	var response model.EirResponseData
-
-	// Get Equipment Status
-	equipmentStatus := GetStatus(request)
-	if equipmentStatus != "" {
-		response.Status = equipmentStatus
+	// Get SearchResult
+	response := GetSearchResult(request)
+	if response != nil {
 		return response, nil
 	}
 
 	// Set Error Details
 	status := http.StatusNotFound
-	detail := ErrorDetailEquipmentUnknown
-	cause := EquipmentUnknown
+	detail := ErrorDetailTargetUnknown
+	cause := TargetUnknown
 	problemDetail := model.ProblemDetails{Status: &status, Detail: &detail, Cause: &cause}
-	err := fmt.Errorf(ErrorDetailEquipmentUnknown)
+	err := fmt.Errorf(ErrorDetailTargetUnknown)
 
 	return problemDetail, err
 }

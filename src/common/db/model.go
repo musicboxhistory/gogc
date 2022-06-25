@@ -1,10 +1,23 @@
 package db
 
-import (
-	"go.mongodb.org/mongo-driver/bson/primitive"
+// Database Name
+const (
+	Database5geir = "5geir"
+	DatabaseAf    = "af"
+	DatabaseAmf   = "amf"
+	DatabaseAusf  = "ausf"
+	DatabaseLmf   = "lmf"
+	DatabaseNrf   = "nrf"
+	DatabaseNssf  = "nssf"
+	DatabasePcf   = "pcf"
+	DatabaseSmf   = "smf"
+	DatabaseSmsf  = "smsf"
+	DatabaseUdm   = "udm"
+	DatabaseUdr   = "udr"
+	DatabaseUpf   = "upf"
 )
 
-type RespData struct {
-	Id   primitive.ObjectID `json:"id" bson:"_id"`
-	Name string             `json:"name" bson:"name"`
-}
+// Collections
+const (
+	EquipmentStatus = "equipmentstatus"
+)
