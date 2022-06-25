@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-func GetEquipmentStatus(input EquipmentStatus) (interface{}, error) {
+func GetEquipmentStatus(request EquipmentStatus) (interface{}, error) {
 
 	logger.Snap("GetEquipmentStatus START")
 	defer logger.Snap("GetEquipmentStatus END")
@@ -16,7 +16,7 @@ func GetEquipmentStatus(input EquipmentStatus) (interface{}, error) {
 	var response model.EirResponseData
 
 	// Get Equipment Status
-	equipmentStatus := GetStatus(input)
+	equipmentStatus := GetStatus(request)
 	if equipmentStatus != "" {
 		response.Status = equipmentStatus
 		return response, nil

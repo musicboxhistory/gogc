@@ -5,7 +5,19 @@ import (
 	"gogc/src/common/logger"
 
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
+
+func GetOne(nfType string, key string) (interface{}, error) {
+
+	logger.Snap("GetOne EquipmentStatus Station START")
+	defer logger.Snap("GetOne EquipmentStatus Station END")
+
+	filter := bson.D{primitive.E{Key: Key, Value: key}}
+	response, err := db.FindOne(nfType, db.EquipmentStatus, filter)
+
+	return response, err
+}
 
 func Get(nfType string) ([]interface{}, error) {
 

@@ -25,31 +25,31 @@ func GetEquipmentStatus(c *gin.Context) {
 	defer logger.Snap("GetEquipmentStatus END")
 
 	// Variable Declaration
-	input := scenario.EquipmentStatus{}
+	request := scenario.EquipmentStatus{}
 
 	// Get Query Parameter
-	input.Pei = c.Query("pei")
-	input.Supi = c.Query("supi")
-	input.Gpsi = c.Query("gpsi")
-	logger.Snap("input:%#+v", input)
+	request.Pei = c.Query("pei")
+	request.Supi = c.Query("supi")
+	request.Gpsi = c.Query("gpsi")
+	logger.Snap("request:%#+v", request)
 
 	// Check Mandatory Parameter
-	if input.Pei == "" {
+	if request.Pei == "" {
 		status := http.StatusBadRequest
 		detail := scenario.ErrorDetailMandatoryIeIncorrect
 		cause := scenario.MandatoryIeIncorrect
-		output := model.ProblemDetails{Status: &status, Detail: &detail, Cause: &cause}
-		c.JSON(http.StatusBadRequest, output)
+		response := model.ProblemDetails{Status: &status, Detail: &detail, Cause: &cause}
+		c.JSON(http.StatusBadRequest, response)
 		return
 	}
 
 	// Call Scenario Function
-	output, err := scenario.GetEquipmentStatus(input)
-	logger.Snap("output:%#+v, err:%v", output, err)
+	response, err := scenario.GetEquipmentStatus(request)
+	logger.Snap("response:%#+v, err:%v", response, err)
 
 	if err == nil {
-		c.JSON(http.StatusOK, output)
+		c.JSON(http.StatusOK, response)
 	} else {
-		c.JSON(http.StatusNotFound, output)
+		c.JSON(http.StatusNotFound, response)
 	}
 }

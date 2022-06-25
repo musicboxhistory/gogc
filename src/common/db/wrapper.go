@@ -2,6 +2,8 @@ package db
 
 import (
 	"context"
+	"fmt"
+	"gogc/src/common/logger"
 
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -16,6 +18,7 @@ func Init() error {
 
 	client, err = mongo.Connect(context.TODO(), options.Client().ApplyURI(uri))
 	if err != nil {
+		logger.Error("err:%v", err)
 		return err
 	}
 
@@ -24,8 +27,13 @@ func Init() error {
 
 func Close() error {
 
+	if client == nil {
+		return fmt.Errorf("client nil")
+	}
+
 	err := client.Disconnect(context.TODO())
 	if err != nil {
+		logger.Error("err:%v", err)
 		return err
 	}
 
@@ -36,9 +44,14 @@ func FindOne(database string, collection string, filter interface{}, opts ...*op
 
 	var result interface{}
 
+	if client == nil {
+		return nil, fmt.Errorf("client nil")
+	}
+
 	coll := client.Database(database).Collection(collection)
 	err := coll.FindOne(context.TODO(), filter, opts...).Decode(&result)
 	if err != nil {
+		logger.Error("err:%v", err)
 		return result, err
 	}
 
@@ -48,9 +61,15 @@ func FindOne(database string, collection string, filter interface{}, opts ...*op
 func Find(database string, collection string, filter interface{}, opts ...*options.FindOptions) ([]interface{}, error) {
 
 	var result []interface{}
+
+	if client == nil {
+		return nil, fmt.Errorf("client nil")
+	}
+
 	coll := client.Database(database).Collection(collection)
 	cur, err := coll.Find(context.TODO(), filter, opts...)
 	if err != nil {
+		logger.Error("err:%v", err)
 		return result, err
 	}
 
@@ -65,9 +84,14 @@ func Find(database string, collection string, filter interface{}, opts ...*optio
 
 func InsertOne(database string, collection string, filter interface{}) error {
 
+	if client == nil {
+		return fmt.Errorf("client nil")
+	}
+
 	coll := client.Database(database).Collection(collection)
 	_, err := coll.InsertOne(context.TODO(), filter)
 	if err != nil {
+		logger.Error("err:%v", err)
 		return err
 	}
 
@@ -76,9 +100,14 @@ func InsertOne(database string, collection string, filter interface{}) error {
 
 func InsertMany(database string, collection string, filter []interface{}) error {
 
+	if client == nil {
+		return fmt.Errorf("client nil")
+	}
+
 	coll := client.Database(database).Collection(collection)
 	_, err := coll.InsertMany(context.TODO(), filter)
 	if err != nil {
+		logger.Error("err:%v", err)
 		return err
 	}
 
@@ -87,9 +116,14 @@ func InsertMany(database string, collection string, filter []interface{}) error 
 
 func DeleteOne(database string, collection string, filter interface{}, opts ...*options.DeleteOptions) error {
 
+	if client == nil {
+		return fmt.Errorf("client nil")
+	}
+
 	coll := client.Database(database).Collection(collection)
 	_, err := coll.DeleteOne(context.TODO(), filter, opts...)
 	if err != nil {
+		logger.Error("err:%v", err)
 		return err
 	}
 
@@ -98,9 +132,14 @@ func DeleteOne(database string, collection string, filter interface{}, opts ...*
 
 func DeleteMany(database string, collection string, filter interface{}, opts ...*options.DeleteOptions) error {
 
+	if client == nil {
+		return fmt.Errorf("client nil")
+	}
+
 	coll := client.Database(database).Collection(collection)
 	_, err := coll.DeleteMany(context.TODO(), filter, opts...)
 	if err != nil {
+		logger.Error("err:%v", err)
 		return err
 	}
 
@@ -109,9 +148,14 @@ func DeleteMany(database string, collection string, filter interface{}, opts ...
 
 func UpdataOne(database string, collection string, filter interface{}, update interface{}, opts ...*options.UpdateOptions) error {
 
+	if client == nil {
+		return fmt.Errorf("client nil")
+	}
+
 	coll := client.Database(database).Collection(collection)
 	_, err := coll.UpdateOne(context.TODO(), filter, update, opts...)
 	if err != nil {
+		logger.Error("err:%v", err)
 		return err
 	}
 
@@ -120,9 +164,14 @@ func UpdataOne(database string, collection string, filter interface{}, update in
 
 func UpdataMany(database string, collection string, filter interface{}, update interface{}, opts ...*options.UpdateOptions) error {
 
+	if client == nil {
+		return fmt.Errorf("client nil")
+	}
+
 	coll := client.Database(database).Collection(collection)
 	_, err := coll.UpdateMany(context.TODO(), filter, update, opts...)
 	if err != nil {
+		logger.Error("err:%v", err)
 		return err
 	}
 

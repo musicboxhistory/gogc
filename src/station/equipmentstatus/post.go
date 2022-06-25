@@ -8,13 +8,13 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func Post(nfType string, input []EquipmentStatus) error {
+func Post(nfType string, request []EquipmentStatus) error {
 
 	logger.Snap("Post EquipmentStatus Station START")
 	defer logger.Snap("Post EquipmentStatus Station END")
 
 	filter := make([]interface{}, 0)
-	for _, value := range input {
+	for _, value := range request {
 		doc := bson.D{primitive.E{Key: Key, Value: value.Key}, primitive.E{Key: Status, Value: value.Status}}
 		filter = append(filter, doc)
 	}

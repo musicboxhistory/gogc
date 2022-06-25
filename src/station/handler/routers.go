@@ -64,6 +64,13 @@ var routes = Routes{
 		Index,
 	},
 
+        {
+                "GetOneEquipmentStatus",
+                http.MethodGet,
+                "/station/v1/equipmentstatus/:nfType/:key",
+                GetOneEquipmentStatus,
+        },
+
 	{
 		"GetEquipmentStatus",
 		http.MethodGet,

@@ -19,6 +19,37 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// GetOneEquipmentStatus - Retrieves the status of the UE
+func GetOneEquipmentStatus(c *gin.Context) {
+
+        logger.Snap("GetOneEquipmentStatus START")
+        defer logger.Snap("GetOneEquipmentStatus END")
+
+        // Variable Declaration
+
+        // Get Path Parameter
+        nfType := c.Param("nfType")
+	key := c.Param("key")
+
+        // Check NF Type
+        nfType = strings.ToLower(nfType)
+        ok := common.CheckNftype(nfType)
+        if !ok {
+                logger.Error("NF Type Error")
+                c.JSON(http.StatusBadRequest, gin.H{})
+                return
+        }
+
+        // Call Scenario Function
+        response, err := equipmentstatus.GetOne(nfType, key)
+
+        if err == nil {
+                c.JSON(http.StatusOK, response)
+        } else {
+                c.JSON(http.StatusNotFound, gin.H{})
+        }
+}
+
 // GetEquipmentStatus - Retrieves the status of the UE
 func GetEquipmentStatus(c *gin.Context) {
 
@@ -40,10 +71,10 @@ func GetEquipmentStatus(c *gin.Context) {
 	}
 
 	// Call Scenario Function
-	output, err := equipmentstatus.Get(nfType)
+	response, err := equipmentstatus.Get(nfType)
 
 	if err == nil {
-		c.JSON(http.StatusOK, output)
+		c.JSON(http.StatusOK, response)
 	} else {
 		c.JSON(http.StatusNotFound, gin.H{})
 	}
@@ -56,7 +87,7 @@ func PostEquipmentStatus(c *gin.Context) {
 	defer logger.Snap("PostEquipmentStatus END")
 
 	// Variable Declaration
-	var input []equipmentstatus.EquipmentStatus
+	var request []equipmentstatus.EquipmentStatus
 
 	// Get Path Parameter
 	nfType := c.Param("nfType")
@@ -72,19 +103,19 @@ func PostEquipmentStatus(c *gin.Context) {
 	}
 
 	// Get Json Request
-	err := c.ShouldBindJSON(&input)
+	err := c.ShouldBindJSON(&request)
 	if err != nil {
 		logger.Error("err:%v", err)
 		c.JSON(http.StatusBadRequest, gin.H{})
 		return
 	}
-	logger.Snap("input:%#+v", input)
+	logger.Snap("request:%#+v", request)
 
 	// Call Scenario Function
-	err = equipmentstatus.Post(nfType, input)
+	err = equipmentstatus.Post(nfType, request)
 
 	if err == nil {
-		c.JSON(http.StatusOK, input)
+		c.JSON(http.StatusOK, request)
 	} else {
 		c.JSON(http.StatusNotFound, gin.H{})
 	}
