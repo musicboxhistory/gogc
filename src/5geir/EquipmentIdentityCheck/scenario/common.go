@@ -66,7 +66,7 @@ func GetDatabase() {
 	}
 }
 
-func GetStatus(request map[string][]string) model.EquipmentStatus {
+func GetStatus(request model.Request) model.EquipmentStatus {
 
 	logger.Debug("GetStatus START")
 	defer logger.Debug("GetStatus END")
@@ -77,17 +77,17 @@ func GetStatus(request map[string][]string) model.EquipmentStatus {
 	for _, value := range equipmentStatusList {
 
 		// Check Pei
-		if request["pei"] != nil && value.Key == fmt.Sprintf("pei-%s", request["pei"][0]) {
+		if request.Query["pei"] != nil && value.Key == fmt.Sprintf("pei-%s", request.Query["pei"][0]) {
 			return value.Status
 		}
 
 		// Check Supi
-		if request["supi"] != nil && value.Key == fmt.Sprintf("supi-%s", request["supi"][0]) {
+		if request.Query["supi"] != nil && value.Key == fmt.Sprintf("supi-%s", request.Query["supi"][0]) {
 			return value.Status
 		}
 
 		// Check Gpsi
-		if request["gpsi"] != nil && value.Key == fmt.Sprintf("gpsi-%s", request["gpsi"][0]) {
+		if request.Query["gpsi"] != nil && value.Key == fmt.Sprintf("gpsi-%s", request.Query["gpsi"][0]) {
 			return value.Status
 		}
 	}

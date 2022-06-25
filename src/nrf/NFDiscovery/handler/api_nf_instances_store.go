@@ -22,29 +22,30 @@ import (
 func SearchNFInstances(c *gin.Context) {
 
 	logger.Debug("SearchNFInstances START")
-        defer logger.Debug("SearchNFInstances END")
+	defer logger.Debug("SearchNFInstances END")
 
-	// Get Query Parameter
-        request := c.Request.URL.Query()
+	// Get Parameter
+	request := model.Request{}
+	request.Query = c.Request.URL.Query()
 	logger.Debug("request:%#+v", request)
 
 	// Check Mandatory Parameter
-        if request["target-nf-type"] == nil || request["requester-nf-type"] == nil {
-                status := http.StatusBadRequest
-                detail := scenario.ErrorDetailMandatoryIeIncorrect
-                cause := scenario.MandatoryIeIncorrect
-                response := model.ProblemDetails{Status: &status, Detail: &detail, Cause: &cause}
-                c.JSON(http.StatusBadRequest, response)
-                return
-        }
+	if request.Query["target-nf-type"] == nil || request.Query["requester-nf-type"] == nil {
+		status := http.StatusBadRequest
+		detail := scenario.ErrorDetailMandatoryIeIncorrect
+		cause := scenario.MandatoryIeIncorrect
+		response := model.ProblemDetails{Status: &status, Detail: &detail, Cause: &cause}
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
 
-        // Call Scenario Function
-        response, err := scenario.SearchNFInstances(request)
-        // logger.Debug("response:%#+v, err:%v", response, err)
+	// Call Scenario Function
+	response, err := scenario.SearchNFInstances(request)
+	// logger.Debug("response:%#+v, err:%v", response, err)
 
-        if err == nil {
-                c.JSON(http.StatusOK, response)
-        } else {
-                c.JSON(http.StatusNotFound, response)
-        }
+	if err == nil {
+		c.JSON(http.StatusOK, response)
+	} else {
+		c.JSON(http.StatusNotFound, response)
+	}
 }

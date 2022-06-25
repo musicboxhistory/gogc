@@ -24,12 +24,13 @@ func GetEquipmentStatus(c *gin.Context) {
 	logger.Debug("GetEquipmentStatus START")
 	defer logger.Debug("GetEquipmentStatus END")
 
-	// Get Query Parameter
-	request := c.Request.URL.Query()
+	// Get Parameter
+	request := model.Request{}
+	request.Query = c.Request.URL.Query()
 	logger.Debug("request:%#+v", request)
 
 	// Check Mandatory Parameter
-	if request["pei"] == nil {
+	if request.Query["pei"] == nil {
 		status := http.StatusBadRequest
 		detail := scenario.ErrorDetailMandatoryIeIncorrect
 		cause := scenario.MandatoryIeIncorrect

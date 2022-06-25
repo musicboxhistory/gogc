@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-func SearchNFInstances(request map[string][]string) (interface{}, error) {
+func SearchNFInstances(request model.Request) (interface{}, error) {
 
 	logger.Debug("GetEquipmentStatus START")
 	defer logger.Debug("GetEquipmentStatus END")

@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-func GetEquipmentStatus(request map[string][]string) (interface{}, error) {
+func GetEquipmentStatus(request model.Request) (interface{}, error) {
 
 	logger.Debug("GetEquipmentStatus START")
 	defer logger.Debug("GetEquipmentStatus END")
