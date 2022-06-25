@@ -6,18 +6,19 @@ import (
 	"gogc/src/common/db"
 	"gogc/src/common/logger"
 	"gogc/src/model"
+	"gogc/src/station/equipmentstatus"
 	"sync"
 	"time"
 )
 
 // global Variable
-var equipmentStatusList map[string]model.EquipmentStatus
+var equipmentStatusList []equipmentstatus.EquipmentStatus
 var mutex sync.Mutex
 
 func Init() {
 
-	logger.Snap("Init START")
-	defer logger.Snap("Init END")
+	logger.Debug("Init START")
+	defer logger.Debug("Init END")
 
 	db.Init()
 	go GetDatabase()
@@ -25,18 +26,39 @@ func Init() {
 
 func GetDatabase() {
 
+	logger.Debug("GetDatabase START")
+        defer logger.Debug("GetDatabase END")
+
 	filter := bson.D{{}}
 	for {
 		// Get Database
-		_, err := db.Find(db.Database5geir, db.EquipmentStatus, filter)
+		result, err := db.Find(db.Database5geir, db.EquipmentStatus, filter)
 		if err != nil {
-			logger.Error("err: %v", err)
+			logger.Error("err:%v", err)
 			time.Sleep(time.Second * 1)
 			continue
 		}
 
+		// Unmarshal Database
+		list := make([]equipmentstatus.EquipmentStatus, len(result))
+		for idx := 0; idx < len(result); idx++ {
+			data, err := bson.Marshal(result[idx])
+			if err != nil {
+				logger.Error("err:%v", err)
+				time.Sleep(time.Second * 1)
+				continue
+			}
+			err = bson.Unmarshal(data, &list[idx])
+			if err != nil {
+				logger.Error("err:%v", err)
+				time.Sleep(time.Second * 1)
+				continue
+			}
+		}
+
 		// Set Database From Variable
 		mutex.Lock()
+		equipmentStatusList = list
 		mutex.Unlock()
 
 		// sleep
@@ -44,27 +66,30 @@ func GetDatabase() {
 	}
 }
 
-func GetStatus(request EquipmentStatus) model.EquipmentStatus {
+func GetStatus(request EirRequestData) model.EquipmentStatus {
 
+	logger.Debug("GetStatus START")
+        defer logger.Debug("GetStatus END")
+	
 	mutex.Lock()
 	defer mutex.Unlock()
 
-	// Check Pei
-	equipmentStatus, ok := equipmentStatusList[fmt.Sprintf("pei-%s", request.Pei)]
-	if ok {
-		return equipmentStatus
-	}
+	for _, value := range equipmentStatusList {
 
-	// Check Supi
-	equipmentStatus, ok = equipmentStatusList[fmt.Sprintf("supi-%s", request.Supi)]
-	if ok {
-		return equipmentStatus
-	}
+		// Check Pei
+		if value.Key == fmt.Sprintf("pei-%s", request.Pei) {
+			return value.Status
+		}
 
-	// Check Gpsi
-	equipmentStatus, ok = equipmentStatusList[fmt.Sprintf("gpsi-%s", request.Gpsi)]
-	if ok {
-		return equipmentStatus
+		// Check Supi
+		if value.Key == fmt.Sprintf("supi-%s", request.Supi) {
+			return value.Status
+		}
+
+		// Check Gpsi
+		if value.Key == fmt.Sprintf("gpsi-%s", request.Gpsi) {
+			return value.Status
+		}
 	}
 
 	return ""

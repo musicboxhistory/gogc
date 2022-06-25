@@ -8,8 +8,12 @@ func TestSnap(t *testing.T) {
 
 	d := 10
 	str := "Hello World"
-	Snap("string")
-	Snap("%v", d)
-	Snap("%v", str)
-	Snap("d = %v, str = %v", d, str)
+	Debug("string")
+	Debug("%v", d)
+	Debug("%v", str)
+	Debug("d = %v, str = %v", d, str)
+	Error("string")
+        Error("%v", d)
+        Error("%v", str)
+        Error("d = %v, str = %v", d, str)
 }

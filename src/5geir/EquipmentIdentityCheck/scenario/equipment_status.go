@@ -7,10 +7,10 @@ import (
 	"net/http"
 )
 
-func GetEquipmentStatus(request EquipmentStatus) (interface{}, error) {
+func GetEquipmentStatus(request EirRequestData) (interface{}, error) {
 
-	logger.Snap("GetEquipmentStatus START")
-	defer logger.Snap("GetEquipmentStatus END")
+	logger.Debug("GetEquipmentStatus START")
+	defer logger.Debug("GetEquipmentStatus END")
 
 	// Variable Declaration
 	var response model.EirResponseData

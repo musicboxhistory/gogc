@@ -21,17 +21,17 @@ import (
 // GetEquipmentStatus - Retrieves the status of the UE
 func GetEquipmentStatus(c *gin.Context) {
 
-	logger.Snap("GetEquipmentStatus START")
-	defer logger.Snap("GetEquipmentStatus END")
+	logger.Debug("GetEquipmentStatus START")
+	defer logger.Debug("GetEquipmentStatus END")
 
 	// Variable Declaration
-	request := scenario.EquipmentStatus{}
+	request := scenario.EirRequestData{}
 
 	// Get Query Parameter
 	request.Pei = c.Query("pei")
 	request.Supi = c.Query("supi")
 	request.Gpsi = c.Query("gpsi")
-	logger.Snap("request:%#+v", request)
+	logger.Debug("request:%#+v", request)
 
 	// Check Mandatory Parameter
 	if request.Pei == "" {
@@ -45,7 +45,7 @@ func GetEquipmentStatus(c *gin.Context) {
 
 	// Call Scenario Function
 	response, err := scenario.GetEquipmentStatus(request)
-	logger.Snap("response:%#+v, err:%v", response, err)
+	logger.Debug("response:%#+v, err:%v", response, err)
 
 	if err == nil {
 		c.JSON(http.StatusOK, response)

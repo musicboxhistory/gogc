@@ -1,6 +1,6 @@
 package scenario
 
-type EquipmentStatus struct {
+type EirRequestData struct {
 	Pei  string
 	Supi string
 	Gpsi string

@@ -3,24 +3,20 @@ package equipmentstatus
 import (
 	"gogc/src/common/db"
 	"gogc/src/common/logger"
-
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 func Post(nfType string, request []EquipmentStatus) error {
 
-	logger.Snap("Post EquipmentStatus Station START")
-	defer logger.Snap("Post EquipmentStatus Station END")
+	logger.Debug("Post EquipmentStatus Station START")
+	defer logger.Debug("Post EquipmentStatus Station END")
 
 	filter := make([]interface{}, 0)
 	for _, value := range request {
-		doc := bson.D{primitive.E{Key: Key, Value: value.Key}, primitive.E{Key: Status, Value: value.Status}}
-		filter = append(filter, doc)
+		filter = append(filter, value)
 	}
 
-	logger.Snap("filter:%#+v", filter)
-	err := db.InsertMany(nfType, db.EquipmentStatus, filter)
+	logger.Debug("filter:%#+v", filter)
+	_, err := db.InsertMany(nfType, db.EquipmentStatus, filter)
 	if err != nil {
 		logger.Error("err:%v", err)
 		return err

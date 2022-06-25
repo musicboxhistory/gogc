@@ -22,8 +22,8 @@ import (
 // GetOneEquipmentStatus - Retrieves the status of the UE
 func GetOneEquipmentStatus(c *gin.Context) {
 
-	logger.Snap("GetOneEquipmentStatus START")
-	defer logger.Snap("GetOneEquipmentStatus END")
+	logger.Debug("GetOneEquipmentStatus START")
+	defer logger.Debug("GetOneEquipmentStatus END")
 
 	// Get Path Parameter
 	nfType := c.Param("nfType")
@@ -51,8 +51,8 @@ func GetOneEquipmentStatus(c *gin.Context) {
 // GetEquipmentStatus - Retrieves the status of the UE
 func GetEquipmentStatus(c *gin.Context) {
 
-	logger.Snap("GetEquipmentStatus START")
-	defer logger.Snap("GetEquipmentStatus END")
+	logger.Debug("GetEquipmentStatus START")
+	defer logger.Debug("GetEquipmentStatus END")
 
 	// Get Path Parameter
 	nfType := c.Param("nfType")
@@ -79,8 +79,8 @@ func GetEquipmentStatus(c *gin.Context) {
 // PostEquipmentStatus - Retrieves the status of the UE
 func PostEquipmentStatus(c *gin.Context) {
 
-	logger.Snap("PostEquipmentStatus START")
-	defer logger.Snap("PostEquipmentStatus END")
+	logger.Debug("PostEquipmentStatus START")
+	defer logger.Debug("PostEquipmentStatus END")
 
 	// Variable Declaration
 	var request []equipmentstatus.EquipmentStatus
@@ -90,7 +90,7 @@ func PostEquipmentStatus(c *gin.Context) {
 
 	// Check NF Type
 	nfType = strings.ToLower(nfType)
-	logger.Snap("nfType:%v", nfType)
+	logger.Debug("nfType:%v", nfType)
 	ok := common.CheckNftype(nfType)
 	if !ok {
 		logger.Error("NF Type Error")
@@ -105,7 +105,7 @@ func PostEquipmentStatus(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{})
 		return
 	}
-	logger.Snap("request:%#+v", request)
+	logger.Debug("request:%#+v", request)
 
 	// Call Scenario Function
 	err = equipmentstatus.Post(nfType, request)
@@ -120,15 +120,15 @@ func PostEquipmentStatus(c *gin.Context) {
 // PutEquipmentStatus - Retrieves the status of the UE
 func PutEquipmentStatus(c *gin.Context) {
 
-	logger.Snap("PutEquipmentStatus START")
-	defer logger.Snap("PutEquipmentStatus END")
+	logger.Debug("PutEquipmentStatus START")
+	defer logger.Debug("PutEquipmentStatus END")
 }
 
 // DeleteEquipmentStatus - Retrieves the status of the UE
 func DeleteEquipmentStatus(c *gin.Context) {
 
-	logger.Snap("DeleteEquipmentStatus START")
-	defer logger.Snap("DeleteEquipmentStatus END")
+	logger.Debug("DeleteEquipmentStatus START")
+	defer logger.Debug("DeleteEquipmentStatus END")
 
 	// Get Path Parameter
 	nfType := c.Param("nfType")

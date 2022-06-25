@@ -1,11 +1,18 @@
 package db
 
 import (
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"gogc/src/common/logger"
+	"gogc/src/model"
 	"os"
 	"testing"
-	"time"
 )
+
+type TestData struct {
+	Key    string `json:"key" bson:"key"`
+	Status string `json:"status,omitempty" bson:"status,omitempty" `
+}
 
 func TestMain(m *testing.M) {
 
@@ -17,80 +24,69 @@ func TestMain(m *testing.M) {
 
 func TestSingleOK(t *testing.T) {
 
-	logger.Snap("TestSingleOK START")
-	defer logger.Snap("TestSingleOK END")
+	logger.Debug("TestSingleOK START")
+	defer logger.Debug("TestSingleOK END")
 
-	// Set
-	result, err := Set("single", 1, time.Hour*1)
+	// InsertOne
+	filter := bson.D{primitive.E{Key: "key", Value: "pei-11227788"}, primitive.E{Key: "status", Value: model.WHITELISTED}}
+	result, err := InsertOne("test", "collection", filter)
 	if err != nil {
-		logger.Snap("err:%v", err)
+		logger.Debug("err:%v", err)
 		t.Errorf("TestSingleOK NG")
 	}
-	logger.Snap("result:%v", result)
+	logger.Debug("result:%#+v", result)
 
-	// Get
-	result, err = Get("single")
+	// FindOne
+	filter = bson.D{primitive.E{Key: "key", Value: "pei-11227788"}}
+	result, err = FindOne("test", "collection", filter)
 	if err != nil {
-		logger.Snap("err:%v", err)
+		logger.Debug("err:%v", err)
 		t.Errorf("TestSingleOK NG")
 	}
-	logger.Snap("result:%v", result)
+	logger.Debug("result:%#+v", result)
 
-	// Del
-	result, err = Del("single")
+	// DeleteOne
+	result, err = DeleteOne("test", "collection", filter)
 	if err != nil {
-		logger.Snap("err:%v", err)
+		logger.Debug("err:%v", err)
 		t.Errorf("TestSingleOK NG")
 	}
-	logger.Snap("result:%v", result)
+	logger.Debug("result:%#+v", result)
 }
 
-func TestMultiOK(t *testing.T) {
+func TestSingleStructOK(t *testing.T) {
 
-	logger.Snap("TestMultiOK START")
-	defer logger.Snap("TestMultiOK END")
+	logger.Debug("TestSingleStructOK START")
+	defer logger.Debug("TestSingleStructOK END")
 
-	// HSet
-	result, err := HSet("multi", "sample1", "TestData1")
-	if err != nil {
-		logger.Snap("err:%v", err)
-		t.Errorf("TestMultiOK NG")
-	}
-	logger.Snap("result:%v", result)
-	result, err = HSet("multi", "sample2", "TestData2")
-	if err != nil {
-		logger.Snap("err:%v", err)
-		t.Errorf("TestMultiOK NG")
-	}
-	logger.Snap("result:%v", result)
+	var response TestData
 
-	// HGet
-	result, err = HGet("multi", "sample2")
+	// InsertOne
+	filter := TestData{Key: "pei-11227788", Status: "WHITELISTED"}
+	result, err := InsertOne("test", "collection", filter)
 	if err != nil {
-		logger.Snap("err:%v", err)
-		t.Errorf("TestMultiOK NG")
+		logger.Debug("err:%v", err)
+		t.Errorf("TestSingleOK NG")
 	}
-	logger.Snap("result:%v", result)
+	logger.Debug("result:%#+v", result)
 
-	// HGetAll
-	result, err = HGetAll("multi")
+	// FindOne
+	filter = TestData{Key: "pei-11227788"}
+	result, err = FindOne("test", "collection", filter)
 	if err != nil {
-		logger.Snap("err:%v", err)
-		t.Errorf("TestMultiOK NG")
+		logger.Debug("err:%v", err)
+		t.Errorf("TestSingleOK NG")
 	}
-	logger.Snap("result:%v", result)
+	logger.Debug("result:%#+v", result)
+	data, err := bson.Marshal(result)
+	err = bson.Unmarshal(data, &response)
+	logger.Debug("response:%#+v", response)
 
-	// HDel
-	result, err = HDel("multi", "sample1")
+	// DeleteOne
+	result, err = DeleteOne("test", "collection", filter)
 	if err != nil {
-		logger.Snap("err:%v", err)
-		t.Errorf("TestMultiOK NG")
+		logger.Debug("err:%v", err)
+		t.Errorf("TestSingleOK NG")
 	}
-	logger.Snap("result:%v", result)
-	result, err = HDel("multi", "sample2")
-	if err != nil {
-		logger.Snap("err:%v", err)
-		t.Errorf("TestMultiOK NG")
-	}
-	logger.Snap("result:%v", result)
+	logger.Debug("result:%#+v", result)
 }

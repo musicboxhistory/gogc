@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"gogc/src/common/logger"
 
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -40,27 +41,35 @@ func Close() error {
 	return nil
 }
 
-func FindOne(database string, collection string, filter interface{}, opts ...*options.FindOneOptions) (interface{}, error) {
+func FindOne(database string, collection string, filter interface{}, opts ...*options.FindOneOptions) (bson.D, error) {
 
-	var result interface{}
+	var dec interface{}
+	var result bson.D
 
 	if client == nil {
 		return nil, fmt.Errorf("client nil")
 	}
 
 	coll := client.Database(database).Collection(collection)
-	err := coll.FindOne(context.TODO(), filter, opts...).Decode(&result)
+	err := coll.FindOne(context.TODO(), filter, opts...).Decode(&dec)
 	if err != nil {
 		logger.Error("err:%v", err)
-		return result, err
+		return nil, err
+	}
+	bsonData := dec.(bson.D)
+	for i, value := range bsonData {
+		if i == 0 {
+			continue
+		}
+		result = append(result, value)
 	}
 
 	return result, nil
 }
 
-func Find(database string, collection string, filter interface{}, opts ...*options.FindOptions) ([]interface{}, error) {
+func Find(database string, collection string, filter interface{}, opts ...*options.FindOptions) ([]bson.D, error) {
 
-	var result []interface{}
+	var result []bson.D
 
 	if client == nil {
 		return nil, fmt.Errorf("client nil")
@@ -74,106 +83,114 @@ func Find(database string, collection string, filter interface{}, opts ...*optio
 	}
 
 	for cur.Next(context.TODO()) {
-		var dec RespData
+		var dec interface{}
+		var single bson.D
 		cur.Decode(&dec)
-		result = append(result, dec)
+		bsonData := dec.(bson.D)
+		for i, value := range bsonData {
+			if i == 0 {
+				continue
+			}
+			single = append(single, value)
+		}
+		result = append(result, single)
 	}
 
 	return result, nil
 }
 
-func InsertOne(database string, collection string, filter interface{}) error {
+func InsertOne(database string, collection string, filter interface{}) (interface{}, error) {
 
 	if client == nil {
-		return fmt.Errorf("client nil")
+		return nil, fmt.Errorf("client nil")
 	}
 
 	coll := client.Database(database).Collection(collection)
-	_, err := coll.InsertOne(context.TODO(), filter)
+	result, err := coll.InsertOne(context.TODO(), filter)
 	if err != nil {
 		logger.Error("err:%v", err)
-		return err
+		return nil, err
 	}
 
-	return nil
+	return result, nil
 }
 
-func InsertMany(database string, collection string, filter []interface{}) error {
+func InsertMany(database string, collection string, filter []interface{}) (interface{}, error) {
 
 	if client == nil {
-		return fmt.Errorf("client nil")
+		return nil, fmt.Errorf("client nil")
 	}
 
 	coll := client.Database(database).Collection(collection)
-	_, err := coll.InsertMany(context.TODO(), filter)
+	result, err := coll.InsertMany(context.TODO(), filter)
 	if err != nil {
 		logger.Error("err:%v", err)
-		return err
+		return nil, err
 	}
 
-	return nil
+	return result, nil
 }
 
-func DeleteOne(database string, collection string, filter interface{}, opts ...*options.DeleteOptions) error {
+func DeleteOne(database string, collection string, filter interface{}, opts ...*options.DeleteOptions) (*mongo.DeleteResult, error) {
 
 	if client == nil {
-		return fmt.Errorf("client nil")
+		return nil, fmt.Errorf("client nil")
 	}
 
 	coll := client.Database(database).Collection(collection)
-	_, err := coll.DeleteOne(context.TODO(), filter, opts...)
+	result, err := coll.DeleteOne(context.TODO(), filter, opts...)
 	if err != nil {
 		logger.Error("err:%v", err)
-		return err
+		return nil, err
 	}
 
-	return nil
+	return result, nil
 }
 
-func DeleteMany(database string, collection string, filter interface{}, opts ...*options.DeleteOptions) error {
+func DeleteMany(database string, collection string, filter interface{}, opts ...*options.DeleteOptions) (*mongo.DeleteResult, error) {
 
 	if client == nil {
-		return fmt.Errorf("client nil")
+		return nil, fmt.Errorf("client nil")
 	}
 
 	coll := client.Database(database).Collection(collection)
-	_, err := coll.DeleteMany(context.TODO(), filter, opts...)
+	result, err := coll.DeleteMany(context.TODO(), filter, opts...)
 	if err != nil {
 		logger.Error("err:%v", err)
-		return err
+		return nil, err
 	}
 
-	return nil
+	return result, nil
 }
 
-func UpdataOne(database string, collection string, filter interface{}, update interface{}, opts ...*options.UpdateOptions) error {
+func UpdataOne(database string, collection string, filter interface{}, update interface{}, opts ...*options.UpdateOptions) (interface{}, error) {
 
 	if client == nil {
-		return fmt.Errorf("client nil")
+		return nil, fmt.Errorf("client nil")
 	}
 
 	coll := client.Database(database).Collection(collection)
-	_, err := coll.UpdateOne(context.TODO(), filter, update, opts...)
+	result, err := coll.UpdateOne(context.TODO(), filter, update, opts...)
 	if err != nil {
 		logger.Error("err:%v", err)
-		return err
+		return nil, err
 	}
 
-	return nil
+	return result, nil
 }
 
-func UpdataMany(database string, collection string, filter interface{}, update interface{}, opts ...*options.UpdateOptions) error {
+func UpdataMany(database string, collection string, filter interface{}, update interface{}, opts ...*options.UpdateOptions) (interface{}, error) {
 
 	if client == nil {
-		return fmt.Errorf("client nil")
+		return nil, fmt.Errorf("client nil")
 	}
 
 	coll := client.Database(database).Collection(collection)
-	_, err := coll.UpdateMany(context.TODO(), filter, update, opts...)
+	result, err := coll.UpdateMany(context.TODO(), filter, update, opts...)
 	if err != nil {
 		logger.Error("err:%v", err)
-		return err
+		return nil, err
 	}
 
-	return nil
+	return result, nil
 }

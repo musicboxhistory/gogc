@@ -33,7 +33,7 @@ func CheckNftype(nfType string) bool {
 	case db.DatabaseUdr:
 		fallthrough
 	case db.DatabaseUpf:
-		logger.Snap("Check NF Type OK")
+		logger.Debug("Check NF Type OK")
 		return true
 	default:
 		logger.Error("nfType:%v", nfType)
