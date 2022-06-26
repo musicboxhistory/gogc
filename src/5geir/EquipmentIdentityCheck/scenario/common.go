@@ -1,7 +1,6 @@
 package scenario
 
 import (
-	"fmt"
 	"go.mongodb.org/mongo-driver/bson"
 	"gogc/src/common/db"
 	"gogc/src/common/logger"
@@ -77,17 +76,17 @@ func GetStatus(request model.Request) model.EquipmentStatus {
 	for _, value := range equipmentStatusList {
 
 		// Check Pei
-		if request.Query["pei"] != nil && value.Key == fmt.Sprintf("pei-%s", request.Query["pei"][0]) {
+		if request.Query["pei"] != nil && value.Key == request.Query["pei"][0] {
 			return value.Status
 		}
 
 		// Check Supi
-		if request.Query["supi"] != nil && value.Key == fmt.Sprintf("supi-%s", request.Query["supi"][0]) {
+		if request.Query["supi"] != nil && value.Key == request.Query["supi"][0] {
 			return value.Status
 		}
 
 		// Check Gpsi
-		if request.Query["gpsi"] != nil && value.Key == fmt.Sprintf("gpsi-%s", request.Query["gpsi"][0]) {
+		if request.Query["gpsi"] != nil && value.Key == request.Query["gpsi"][0] {
 			return value.Status
 		}
 	}

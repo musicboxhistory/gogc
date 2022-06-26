@@ -20,4 +20,5 @@ const (
 // Collections
 const (
 	EquipmentStatus = "equipmentstatus"
+	UeDataInfo      = "uedatainfo"
 )

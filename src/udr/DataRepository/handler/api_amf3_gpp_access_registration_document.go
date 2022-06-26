@@ -10,6 +10,9 @@
 package handler
 
 import (
+	"gogc/src/common/logger"
+	"gogc/src/model"
+	"gogc/src/udr/DataRepository/scenario"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -17,15 +20,81 @@ import (
 
 // AmfContext3gpp - To modify the AMF context data of a UE using 3gpp access in the UDR
 func AmfContext3gpp(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{})
+
+	logger.Debug("AmfContext3gpp START")
+	defer logger.Debug("AmfContext3gpp END")
+
+	// Get Parameter
+	request := model.Request{}
+	request.Query = c.Request.URL.Query()
+	request.Params["ueId"] = c.Param("ueId")
+	logger.Debug("request:%#+v", request)
+
+	// Call Scenario Function
+	response, err := scenario.AmfContext3gpp(request)
+	logger.Debug("response:%#+v, err:%v", response, err)
+
+	if err == nil {
+		c.JSON(http.StatusOK, response)
+	} else {
+		c.JSON(http.StatusNotFound, response)
+	}
 }
 
 // CreateAmfContext3gpp - To store the AMF context data of a UE using 3gpp access in the UDR
 func CreateAmfContext3gpp(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{})
+
+	logger.Debug("CreateAmfContext3gpp START")
+	defer logger.Debug("CreateAmfContext3gpp END")
+
+	// Get Parameter
+	request := model.Request{}
+	request.Query = c.Request.URL.Query()
+	request.Params["ueId"] = c.Param("ueId")
+	logger.Debug("request:%#+v", request)
+
+	// Get Json Request
+	jsonData := model.Amf3GppAccessRegistration{}
+	err := c.ShouldBindJSON(&jsonData)
+	if err != nil {
+		// Set Error Details
+		status := http.StatusNotFound
+		detail := scenario.ErrorDetailUserNotFoud
+		cause := scenario.UserNotFoud
+		problemDetail := model.ProblemDetails{Status: &status, Detail: &detail, Cause: &cause}
+		c.JSON(http.StatusBadRequest, problemDetail)
+		return
+	}
+
+	// Call Scenario Function
+	response, err := scenario.CreateAmfContext3gpp(request, &jsonData)
+
+	if err == nil {
+		c.JSON(http.StatusOK, &jsonData)
+	} else {
+		c.JSON(http.StatusNotFound, response)
+	}
 }
 
 // QueryAmfContext3gpp - Retrieves the AMF context data of a UE using 3gpp access
 func QueryAmfContext3gpp(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{})
+
+	logger.Debug("QueryAmfContext3gpp START")
+	defer logger.Debug("QueryAmfContext3gpp END")
+
+	// Get Parameter
+	request := model.Request{}
+	request.Query = c.Request.URL.Query()
+	request.Params["ueId"] = c.Param("ueId")
+	logger.Debug("request:%#+v", request)
+
+	// Call Scenario Function
+	response, err := scenario.QueryAmfContext3gpp(request)
+	logger.Debug("response:%#+v, err:%v", response, err)
+
+	if err == nil {
+		c.JSON(http.StatusOK, response)
+	} else {
+		c.JSON(http.StatusNotFound, response)
+	}
 }

@@ -17,17 +17,17 @@ func GetEquipmentStatus(request model.Request) (interface{}, error) {
 
 	// Get Equipment Status
 	equipmentStatus := GetStatus(request)
-	if equipmentStatus != "" {
-		response.Status = equipmentStatus
-		return response, nil
+	if equipmentStatus == "" {
+		// Set Error Details
+		status := http.StatusNotFound
+		detail := ErrorDetailEquipmentUnknown
+		cause := EquipmentUnknown
+		problemDetail := model.ProblemDetails{Status: &status, Detail: &detail, Cause: &cause}
+
+		err := fmt.Errorf(ErrorDetailEquipmentUnknown)
+		return problemDetail, err
 	}
 
-	// Set Error Details
-	status := http.StatusNotFound
-	detail := ErrorDetailEquipmentUnknown
-	cause := EquipmentUnknown
-	problemDetail := model.ProblemDetails{Status: &status, Detail: &detail, Cause: &cause}
-	err := fmt.Errorf(ErrorDetailEquipmentUnknown)
-
-	return problemDetail, err
+	response.Status = equipmentStatus
+	return response, nil
 }
