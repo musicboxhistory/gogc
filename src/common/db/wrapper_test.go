@@ -10,8 +10,14 @@ import (
 )
 
 type TestData struct {
-	Key    string `json:"key" bson:"key"`
-	Status string `json:"status,omitempty" bson:"status,omitempty" `
+	A string  `json:"a" bson:"a"`
+	B string  `json:"b" bson:"b"`
+	C string  `json:"c,omitempty" bson:"c,omitempty"`
+	D string  `json:"d,omitempty" bson:"d,omitempty"`
+	E *string `json:"e" bson:"e"`
+	F *string `json:"f" bson:"f"`
+	G string  `json:"g,omitempty" bson:"g,omitempty"`
+	H string  `json:"h,omitempty" bson:"h,omitempty"`
 }
 
 func TestMain(m *testing.M) {
@@ -28,7 +34,7 @@ func TestSingleOK(t *testing.T) {
 	defer logger.Debug("TestSingleOK END")
 
 	// InsertOne
-	filter := bson.D{primitive.E{Key: "key", Value: "pei-11227788"}, primitive.E{Key: "status", Value: model.WHITELISTED}}
+	filter := bson.D{primitive.E{Key: "a", Value: "pei-11227788"}, primitive.E{Key: "b", Value: model.WHITELISTED}}
 	result, err := InsertOne("test", "collection", filter)
 	if err != nil {
 		logger.Debug("err:%v", err)
@@ -37,7 +43,7 @@ func TestSingleOK(t *testing.T) {
 	logger.Debug("result:%#+v", result)
 
 	// FindOne
-	filter = bson.D{primitive.E{Key: "key", Value: "pei-11227788"}}
+	filter = bson.D{primitive.E{Key: "a", Value: "pei-11227788"}}
 	result, err = FindOne("test", "collection", filter)
 	if err != nil {
 		logger.Debug("err:%v", err)
@@ -62,7 +68,9 @@ func TestSingleStructOK(t *testing.T) {
 	var response TestData
 
 	// InsertOne
-	filter := TestData{Key: "pei-11227788", Status: "WHITELISTED"}
+	//key := "Key test"
+	//status := "Status test"
+	filter := TestData{A: "pei-11227788", B: "WHITELISTED"}
 	result, err := InsertOne("test", "collection", filter)
 	if err != nil {
 		logger.Debug("err:%v", err)
@@ -71,7 +79,6 @@ func TestSingleStructOK(t *testing.T) {
 	logger.Debug("result:%#+v", result)
 
 	// FindOne
-	filter = TestData{Key: "pei-11227788"}
 	result, err = FindOne("test", "collection", filter)
 	if err != nil {
 		logger.Debug("err:%v", err)

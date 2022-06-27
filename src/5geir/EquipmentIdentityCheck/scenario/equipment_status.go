@@ -12,12 +12,9 @@ func GetEquipmentStatus(request model.Request) (interface{}, error) {
 	logger.Debug("GetEquipmentStatus START")
 	defer logger.Debug("GetEquipmentStatus END")
 
-	// Variable Declaration
-	var response model.EirResponseData
-
 	// Get Equipment Status
-	equipmentStatus := GetStatus(request)
-	if equipmentStatus == "" {
+	response := GetStatus(request)
+	if response.Status == "" {
 		// Set Error Details
 		status := http.StatusNotFound
 		detail := ErrorDetailEquipmentUnknown
@@ -28,6 +25,28 @@ func GetEquipmentStatus(request model.Request) (interface{}, error) {
 		return problemDetail, err
 	}
 
-	response.Status = equipmentStatus
 	return response, nil
+}
+
+func GetStatus(request model.Request) model.EirResponseData {
+
+	logger.Debug("GetStatus START")
+	defer logger.Debug("GetStatus END")
+
+	var response model.EirResponseData
+
+	mutex.Lock()
+	defer mutex.Unlock()
+
+	for _, value := range equipmentStatusList {
+
+		// Check Query
+		if request.Query["pei"] != nil && value.Key == request.Query["pei"][0] ||
+			request.Query["supi"] != nil && value.Key == request.Query["supi"][0] ||
+			request.Query["gpsi"] != nil && value.Key == request.Query["gpsi"][0] {
+			response.Status = value.Status
+		}
+	}
+
+	return response
 }

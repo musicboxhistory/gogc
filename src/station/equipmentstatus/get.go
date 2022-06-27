@@ -5,6 +5,7 @@ import (
 	"gogc/src/common/logger"
 
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 func GetOne(nfType string, key string) (EquipmentStatus, error) {
@@ -15,13 +16,25 @@ func GetOne(nfType string, key string) (EquipmentStatus, error) {
 	var response EquipmentStatus
 
 	filter := EquipmentStatus{Key: key}
+	logger.Debug("filter:%v", filter)
 	result, err := db.FindOne(nfType, db.EquipmentStatus, filter)
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			logger.Debug("err:%v", err)
+		} else {
+			logger.Error("err:%v", err)
+		}
+		return response, err
+	}
+
 	data, err := bson.Marshal(result)
 	if err != nil {
+		logger.Error("err:%v", err)
 		return response, err
 	}
 	err = bson.Unmarshal(data, &response)
 	if err != nil {
+		logger.Error("err:%v", err)
 		return response, err
 	}
 
@@ -36,6 +49,7 @@ func Get(nfType string) ([]EquipmentStatus, error) {
 	filter := bson.D{}
 	result, err := db.Find(nfType, db.EquipmentStatus, filter)
 	if err != nil {
+		logger.Error("err:%v", err)
 		return nil, err
 	}
 
@@ -43,10 +57,12 @@ func Get(nfType string) ([]EquipmentStatus, error) {
 	for idx := 0; idx < len(result); idx++ {
 		data, err := bson.Marshal(result[idx])
 		if err != nil {
+			logger.Error("err:%v", err)
 			return nil, err
 		}
 		err = bson.Unmarshal(data, &response[idx])
 		if err != nil {
+			logger.Error("err:%v", err)
 			return nil, err
 		}
 	}

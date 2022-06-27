@@ -4,7 +4,6 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"gogc/src/common/db"
 	"gogc/src/common/logger"
-	"gogc/src/model"
 	"gogc/src/station/equipmentstatus"
 	"sync"
 	"time"
@@ -63,33 +62,4 @@ func GetDatabase() {
 		// sleep
 		time.Sleep(time.Second * 1)
 	}
-}
-
-func GetStatus(request model.Request) model.EquipmentStatus {
-
-	logger.Debug("GetStatus START")
-	defer logger.Debug("GetStatus END")
-
-	mutex.Lock()
-	defer mutex.Unlock()
-
-	for _, value := range equipmentStatusList {
-
-		// Check Pei
-		if request.Query["pei"] != nil && value.Key == request.Query["pei"][0] {
-			return value.Status
-		}
-
-		// Check Supi
-		if request.Query["supi"] != nil && value.Key == request.Query["supi"][0] {
-			return value.Status
-		}
-
-		// Check Gpsi
-		if request.Query["gpsi"] != nil && value.Key == request.Query["gpsi"][0] {
-			return value.Status
-		}
-	}
-
-	return ""
 }

@@ -53,7 +53,9 @@ func FindOne(database string, collection string, filter interface{}, opts ...*op
 	coll := client.Database(database).Collection(collection)
 	err := coll.FindOne(context.TODO(), filter, opts...).Decode(&dec)
 	if err != nil {
-		logger.Error("err:%v", err)
+		if err != mongo.ErrNoDocuments {
+			logger.Error("err:%v", err)
+		}
 		return nil, err
 	}
 	bsonData := dec.(bson.D)
