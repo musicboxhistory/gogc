@@ -9,6 +9,7 @@
 
 package model
 
-// UeReachableInd - UE Reachable Indication
-type UeReachableInd struct {
-}
+type UeReachableInd string
+
+// List of UeReachableInd
+const ()

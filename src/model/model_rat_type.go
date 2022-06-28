@@ -9,6 +9,25 @@
 
 package model
 
-// RatType - Indicates the radio access used.
-type RatType struct {
-}
+type RatType string
+
+// List of RatType
+const (
+	VIRTUAL        RatType = "VIRTUAL"
+	NBIOT          RatType = "NBIOT"
+	WIRELINE       RatType = "WIRELINE"
+	WIRELINE_CABLE RatType = "WIRELINE_CABLE"
+	WIRELINE_BBF   RatType = "WIRELINE_BBF"
+	LTE_M          RatType = "LTE-M"
+	NR_U           RatType = "NR_U"
+	EUTRA_U        RatType = "EUTRA_U"
+	TRUSTED_N3_GA  RatType = "TRUSTED_N3GA"
+	TRUSTED_WLAN   RatType = "TRUSTED_WLAN"
+	UTRA           RatType = "UTRA"
+	GERA           RatType = "GERA"
+	NR_LEO         RatType = "NR_LEO"
+	NR_MEO         RatType = "NR_MEO"
+	NR_GEO         RatType = "NR_GEO"
+	NR_OTHER_SAT   RatType = "NR_OTHER_SAT"
+	NR_REDCAP      RatType = "NR_REDCAP"
+)

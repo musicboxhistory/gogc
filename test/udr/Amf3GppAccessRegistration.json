@@ -1,0 +1,54 @@
+{
+  "amfInstanceId": "amfInstancdId1234",
+  "supportedFeatures": "FeaturesText",
+  "purgeFlag": true,
+  "pei": "pei-11223344",
+  "imsVoPs": "HOMOGENEOUS_SUPPORT",
+  "deregCallbackUri": "localhost:8080/dereg",
+  "amfServiceNameDereg": "namf-comm",
+  "pcscfRestorationCallbackUri": "localhost:8080/pcscf",
+  "amfServiceNamePcscfRest": "nadrf-dm",
+  "initialRegistrationInd": true,
+  "emergencyRegistrationInd": true,
+  "guami": {
+    "plmnId": {
+      "mcc": "123",
+      "mnc": "456",
+      "nid": "nid1"
+    },
+    "amfId": "Text"
+  },
+  "backupAmfInfo": [
+    {
+      "backupAmf": "amfDomain"
+    }
+  ],
+  "drFlag": true,
+  "ratType": "UTRA",
+  "urrpIndicator": true,
+  "amfEeSubscriptionId": "amfId",
+  "epsInterworkingInfo": {
+  },
+  "ueSrvccCapability": true,
+  "registrationTime": "2022:12:31",
+  "vgmlcAddress": {
+    "vgmlcAddressIpv4": "127.0.0.1"
+  },
+  "contextInfo": {
+    "origHeaders": [
+      "orighead1"
+    ],
+    "requestHeaders": [
+      "requesthead"
+    ]
+  },
+  "noEeSubscriptionInd": true,
+  "supi": "ims-11223344",
+  "ueReachableInd": "NOT_REACHABLE",
+  "reRegistrationRequired": true,
+  "adminDeregSubWithdrawn": true,
+  "dataRestorationCallbackUri": "localhost:8080/callback",
+  "resetIds": [
+    "resetId1"
+  ]
+}

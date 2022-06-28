@@ -9,5 +9,11 @@
 
 package model
 
-type ImsVoPs struct {
-}
+type ImsVoPs string
+
+// List of ImsVoPs
+const (
+	HOMOGENEOUS_SUPPORT        ImsVoPs = "HOMOGENEOUS_SUPPORT"
+	HOMOGENEOUS_NON_SUPPORT    ImsVoPs = "HOMOGENEOUS_NON_SUPPORT"
+	NON_HOMOGENEOUS_OR_UNKNOWN ImsVoPs = "NON_HOMOGENEOUS_OR_UNKNOWN"
+)
