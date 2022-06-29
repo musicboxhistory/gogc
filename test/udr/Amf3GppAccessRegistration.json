@@ -30,7 +30,7 @@
   "epsInterworkingInfo": {
   },
   "ueSrvccCapability": true,
-  "registrationTime": "2022:12:31",
+  "registrationTime": "1981-01-07T17:44:13Z",
   "vgmlcAddress": {
     "vgmlcAddressIpv4": "127.0.0.1"
   },
@@ -43,7 +43,7 @@
     ]
   },
   "noEeSubscriptionInd": true,
-  "supi": "ims-11223344",
+  "supi": "imsi-11223344",
   "ueReachableInd": "NOT_REACHABLE",
   "reRegistrationRequired": true,
   "adminDeregSubWithdrawn": true,

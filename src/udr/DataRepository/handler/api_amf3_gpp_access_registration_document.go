@@ -26,6 +26,7 @@ func AmfContext3gpp(c *gin.Context) {
 
 	// Get Parameter
 	request := model.Request{}
+	request.Params = map[string]string{}
 	request.Query = c.Request.URL.Query()
 	request.Params["ueId"] = c.Param("ueId")
 	logger.Debug("request:%#+v", request)
@@ -49,6 +50,7 @@ func CreateAmfContext3gpp(c *gin.Context) {
 
 	// Get Parameter
 	request := model.Request{}
+	request.Params = map[string]string{}
 	request.Query = c.Request.URL.Query()
 	request.Params["ueId"] = c.Param("ueId")
 	logger.Debug("request:%#+v", request)
@@ -58,6 +60,7 @@ func CreateAmfContext3gpp(c *gin.Context) {
 	err := c.ShouldBindJSON(&jsonData)
 	if err != nil {
 		// Set Error Details
+		logger.Error("err:%v", err)
 		status := http.StatusNotFound
 		detail := scenario.ErrorDetailUserNotFoud
 		cause := scenario.UserNotFoud
@@ -84,6 +87,7 @@ func QueryAmfContext3gpp(c *gin.Context) {
 
 	// Get Parameter
 	request := model.Request{}
+	request.Params = map[string]string{}
 	request.Query = c.Request.URL.Query()
 	request.Params["ueId"] = c.Param("ueId")
 	logger.Debug("request:%#+v", request)

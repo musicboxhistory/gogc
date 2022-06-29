@@ -16,7 +16,7 @@ func GetOne(nfType string, key string) (EquipmentStatus, error) {
 	var response EquipmentStatus
 
 	filter := EquipmentStatus{Key: key}
-	logger.Debug("filter:%v", filter)
+	logger.Debug("filter:%#v", filter)
 	result, err := db.FindOne(nfType, db.EquipmentStatus, filter)
 	if err != nil {
 		if err == mongo.ErrNoDocuments {

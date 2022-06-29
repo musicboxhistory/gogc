@@ -17,16 +17,21 @@ func Init() {
 
 func GetFindFilter(request model.Request) (UeDataInfo, error) {
 
-	filter := UeDataInfo{}
+//	filter := UeDataInfo{}
+	var filter UeDataInfo
 	ueId := request.Params["ueId"]
 
-	if ueId[0:4] == "imsi-" {
-		filter.UeIdInfo.Supi = &ueId
-	} else if ueId[0:6] == "msisdn-" {
-		filter.UeIdInfo.Gpsi = &ueId
-	} else if ueId[0:4] == "imei-" {
-		filter.UeIdInfo.Pei = &ueId
+	if ueId[0:5] == "imsi-" {
+		filter = UeDataInfo{UeIdInfo: model.UeIdentityInfo{Supi: ueId}}
+//		filter.UeIdInfo.Supi = &ueId
+	} else if ueId[0:7] == "msisdn-" {
+		filter = UeDataInfo{UeIdInfo: model.UeIdentityInfo{Gpsi: ueId}}
+//		filter.UeIdInfo.Gpsi = &ueId
+	} else if ueId[0:5] == "imei-" {
+		filter = UeDataInfo{UeIdInfo: model.UeIdentityInfo{Pei: ueId}}
+//		filter.UeIdInfo.Pei = &ueId
 	} else {
+		logger.Error("ueId:%v", ueId)
 		return filter, fmt.Errorf(ErrorDetailDataNotFound)
 	}
 

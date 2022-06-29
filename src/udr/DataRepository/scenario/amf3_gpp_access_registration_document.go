@@ -74,26 +74,35 @@ func PutAmfContext3gpp(request model.Request, jsonData *model.Amf3GppAccessRegis
 
 	// Find DB
 	filter, err := GetFindFilter(request)
+	if err != nil {
+		logger.Error("err:%v", err)
+		return err
+	}
+	logger.Debug("filter:%#v", filter)
 	_, err = db.FindOne(db.DatabaseUdr, db.UeDataInfo, filter)
 
 	update := filter
 	if jsonData.Pei != nil {
-		update.UeIdInfo.Pei = jsonData.Pei
+		update.UeIdInfo.Pei = *jsonData.Pei
 	}
 	if jsonData.Supi != nil {
-		update.UeIdInfo.Supi = jsonData.Supi
+		update.UeIdInfo.Supi = *jsonData.Supi
 	}
 	update.AmfAccessReg = jsonData
 	if err == nil {
 		// Update DB
+		logger.Debug("Update DB")
 		_, err = db.UpdataOne(db.DatabaseUdr, db.UeDataInfo, filter, update)
 		if err != nil {
+			logger.Error("err:%v", err)
 			return err
 		}
 	} else if err == mongo.ErrNoDocuments {
 		// Insert DB
+		logger.Debug("Insert DB")
 		_, err = db.InsertOne(db.DatabaseUdr, db.UeDataInfo, update)
 		if err != nil {
+			logger.Error("err:%v", err)
 			return err
 		}
 	} else {
@@ -111,23 +120,28 @@ func GetAmfContext3gpp(request model.Request) (*model.Amf3GppAccessRegistration,
 	// Set DB Filter
 	filter, err := GetFindFilter(request)
 	if err != nil {
+		logger.Error("err:%v", err)
 		return nil, err
 	}
+	logger.Debug("filter:%#v", filter)
 
 	// Find DB
 	result, err := db.FindOne(db.DatabaseUdr, db.UeDataInfo, filter)
 	if err != nil {
+		logger.Error("err:%v", err)
 		return nil, err
 	}
 
 	// Bson Marshal
 	data, err := bson.Marshal(result)
 	if err != nil {
+		logger.Error("err:%v", err)
 		return nil, err
 	}
 	response := UeDataInfo{}
 	err = bson.Unmarshal(data, &response)
 	if err != nil {
+		logger.Error("err:%v", err)
 		return nil, err
 	}
 

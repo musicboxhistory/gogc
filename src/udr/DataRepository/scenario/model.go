@@ -40,6 +40,6 @@ const (
 
 // Ue Data
 type UeDataInfo struct {
-	UeIdInfo     model.UeIdentityInfo             `json:"ueidinfo" json:"ueidinfo"`
+	UeIdInfo     model.UeIdentityInfo             `json:"ueidinfo,omitempty" json:"ueidinfo,omitempty"`
 	AmfAccessReg *model.Amf3GppAccessRegistration `json:"amfaccessreg,omitempty" json:"amfaccessreg,omitempty"`
 }
