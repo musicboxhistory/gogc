@@ -12,6 +12,7 @@ package handler
 import (
 	"gogc/src/5geir/EquipmentIdentityCheck/scenario"
 	"gogc/src/common/logger"
+	"gogc/src/common/signal"
 	"gogc/src/model"
 	"net/http"
 
@@ -25,8 +26,7 @@ func GetEquipmentStatus(c *gin.Context) {
 	defer logger.Debug("GetEquipmentStatus END")
 
 	// Get Parameter
-	request := model.Request{}
-	request.Query = c.Request.URL.Query()
+	request := signal.RequestInit(c)
 	logger.Debug("request:%#+v", request)
 
 	// Check Mandatory Parameter

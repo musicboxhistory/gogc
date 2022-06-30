@@ -73,7 +73,7 @@ func PutAmfContext3gpp(request model.Request, jsonData *model.Amf3GppAccessRegis
 	defer logger.Debug("CreateAmfContext3gpp END")
 
 	// Find DB
-	filter, err := GetFindFilter(request)
+	filter, err := GetFilterUeDataInfo(request)
 	if err != nil {
 		logger.Error("err:%v", err)
 		return err
@@ -81,14 +81,7 @@ func PutAmfContext3gpp(request model.Request, jsonData *model.Amf3GppAccessRegis
 	logger.Debug("filter:%#v", filter)
 	_, err = db.FindOne(db.DatabaseUdr, db.UeDataInfo, filter)
 
-	update := filter
-	if jsonData.Pei != nil {
-		update.UeIdInfo.Pei = *jsonData.Pei
-	}
-	if jsonData.Supi != nil {
-		update.UeIdInfo.Supi = *jsonData.Supi
-	}
-	update.AmfAccessReg = jsonData
+	update := GetUpdateUeDataInfo(request, jsonData)
 	if err == nil {
 		// Update DB
 		logger.Debug("Update DB")
@@ -118,7 +111,7 @@ func GetAmfContext3gpp(request model.Request) (*model.Amf3GppAccessRegistration,
 	defer logger.Debug("GetAmfContext3gpp END")
 
 	// Set DB Filter
-	filter, err := GetFindFilter(request)
+	filter, err := GetFilterUeDataInfo(request)
 	if err != nil {
 		logger.Error("err:%v", err)
 		return nil, err

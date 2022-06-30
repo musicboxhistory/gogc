@@ -11,6 +11,7 @@ package handler
 
 import (
 	"gogc/src/common/logger"
+	"gogc/src/common/signal"
 	"gogc/src/model"
 	"gogc/src/udr/DataRepository/scenario"
 	"net/http"
@@ -25,9 +26,7 @@ func AmfContext3gpp(c *gin.Context) {
 	defer logger.Debug("AmfContext3gpp END")
 
 	// Get Parameter
-	request := model.Request{}
-	request.Params = map[string]string{}
-	request.Query = c.Request.URL.Query()
+	request := signal.RequestInit(c)
 	request.Params["ueId"] = c.Param("ueId")
 	logger.Debug("request:%#+v", request)
 
@@ -49,9 +48,7 @@ func CreateAmfContext3gpp(c *gin.Context) {
 	defer logger.Debug("CreateAmfContext3gpp END")
 
 	// Get Parameter
-	request := model.Request{}
-	request.Params = map[string]string{}
-	request.Query = c.Request.URL.Query()
+	request := signal.RequestInit(c)
 	request.Params["ueId"] = c.Param("ueId")
 	logger.Debug("request:%#+v", request)
 
@@ -86,9 +83,7 @@ func QueryAmfContext3gpp(c *gin.Context) {
 	defer logger.Debug("QueryAmfContext3gpp END")
 
 	// Get Parameter
-	request := model.Request{}
-	request.Params = map[string]string{}
-	request.Query = c.Request.URL.Query()
+	request := signal.RequestInit(c)
 	request.Params["ueId"] = c.Param("ueId")
 	logger.Debug("request:%#+v", request)
 
