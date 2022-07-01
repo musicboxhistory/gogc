@@ -7,10 +7,10 @@ import (
 	"net/http"
 )
 
-func GetNSSAI(request model.Request) (interface{}, error) {
+func GetAmData(request model.Request) (interface{}, error) {
 
-	logger.Debug("GetEquipmentStatus START")
-	defer logger.Debug("GetEquipmentStatus END")
+	logger.Debug("GetAmData START")
+	defer logger.Debug("GetAmData END")
 
 	// Get SearchResult
 
