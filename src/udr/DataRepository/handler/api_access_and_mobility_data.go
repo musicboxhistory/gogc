@@ -10,6 +10,10 @@
 package handler
 
 import (
+	"gogc/src/common/logger"
+	"gogc/src/common/signal"
+	"gogc/src/model"
+	"gogc/src/udr/DataRepository/scenario"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -17,7 +21,37 @@ import (
 
 // CreateOrReplaceAccessAndMobilityData - Creates and updates the access and mobility exposure data for a UE
 func CreateOrReplaceAccessAndMobilityData(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{})
+
+	logger.Debug("CreateOrReplaceAccessAndMobilityData START")
+	defer logger.Debug("CreateOrReplaceAccessAndMobilityData END")
+
+	// Get Parameter
+	request := signal.RequestInit(c)
+	request.Params["ueId"] = c.Param("ueId")
+	logger.Debug("request:%#+v", request)
+
+	// Get Json Request
+	jsonData := model.AccessAndMobilityData{}
+	err := c.ShouldBindJSON(&jsonData)
+	if err != nil {
+		// Set Error Details
+		logger.Error("err:%v", err)
+		status := http.StatusNotFound
+		detail := scenario.ErrorDetailUserNotFoud
+		cause := scenario.UserNotFoud
+		problemDetail := model.ProblemDetails{Status: &status, Detail: &detail, Cause: &cause}
+		c.JSON(http.StatusBadRequest, problemDetail)
+		return
+	}
+
+	// Call Scenario Function
+	response, err := scenario.CreateOrReplaceAccessAndMobilityData(request, &jsonData)
+
+	if err == nil {
+		c.JSON(http.StatusOK, &jsonData)
+	} else {
+		c.JSON(http.StatusNotFound, response)
+	}
 }
 
 // DeleteAccessAndMobilityData - Deletes the access and mobility exposure data for a UE

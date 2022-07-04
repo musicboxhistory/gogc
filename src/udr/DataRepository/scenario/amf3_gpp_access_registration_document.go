@@ -2,12 +2,13 @@ package scenario
 
 import (
 	"fmt"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/mongo"
 	"gogc/src/common/db"
 	"gogc/src/common/logger"
 	"gogc/src/model"
 	"net/http"
+
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 func AmfContext3gpp(request model.Request) (interface{}, error) {
@@ -79,12 +80,24 @@ func PutAmfContext3gpp(request model.Request, jsonData *model.Amf3GppAccessRegis
 		return err
 	}
 	logger.Debug("filter:%#v", filter)
-	_, err = db.FindOne(db.DatabaseUdr, db.UeDataInfo, filter)
+	result, err := db.FindOne(db.DatabaseUdr, db.UeDataInfo, filter)
 
-	update := GetUpdateUeDataInfo(request, jsonData)
 	if err == nil {
 		// Update DB
 		logger.Debug("Update DB")
+		// Bson Marshal
+		data, err := bson.Marshal(result)
+		if err != nil {
+			logger.Error("err:%v", err)
+			return err
+		}
+		update := UeDataInfo{}
+		err = bson.Unmarshal(data, &update)
+		if err != nil {
+			logger.Error("err:%v", err)
+			return err
+		}
+		update.AmfAccessReg = jsonData
 		_, err = db.UpdataOne(db.DatabaseUdr, db.UeDataInfo, filter, update)
 		if err != nil {
 			logger.Error("err:%v", err)
@@ -93,6 +106,8 @@ func PutAmfContext3gpp(request model.Request, jsonData *model.Amf3GppAccessRegis
 	} else if err == mongo.ErrNoDocuments {
 		// Insert DB
 		logger.Debug("Insert DB")
+		update := GetUpdateUeDataInfo(request)
+		update.AmfAccessReg = jsonData
 		_, err = db.InsertOne(db.DatabaseUdr, db.UeDataInfo, update)
 		if err != nil {
 			logger.Error("err:%v", err)

@@ -2,11 +2,12 @@ package scenario
 
 import (
 	"fmt"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 	"gogc/src/common/db"
 	"gogc/src/common/logger"
 	"gogc/src/model"
+
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 func Init() {
@@ -36,7 +37,7 @@ func GetFilterUeDataInfo(request model.Request) (bson.D, error) {
 	return filter, nil
 }
 
-func GetUpdateUeDataInfo(request model.Request, jsonData *model.Amf3GppAccessRegistration) UeDataInfo {
+func GetUpdateUeDataInfo(request model.Request) UeDataInfo {
 
 	update := UeDataInfo{}
 	ueId := request.Params["ueId"]
@@ -50,14 +51,6 @@ func GetUpdateUeDataInfo(request model.Request, jsonData *model.Amf3GppAccessReg
 	} else {
 		logger.Error("ueId:%v", ueId)
 	}
-
-	if jsonData.Pei != nil {
-		update.UeIdInfo.Pei = *jsonData.Pei
-	}
-	if jsonData.Supi != nil {
-		update.UeIdInfo.Supi = *jsonData.Supi
-	}
-	update.AmfAccessReg = jsonData
 
 	return update
 }

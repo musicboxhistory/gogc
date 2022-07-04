@@ -8,6 +8,6 @@ const (
 
 // Detail
 const (
-	ErrorDetailMandatoryIeIncorrect = "Mandatory parameters not set."
-	ErrorDetailEquipmentUnknown     = "Indicate the mobile equipment is not known in the EIR."
+	ErrorDetailMandatoryIeIncorrect = "mandatory parameters not set"
+	ErrorDetailEquipmentUnknown     = "indicate the mobile equipment is not known in the EIR"
 )

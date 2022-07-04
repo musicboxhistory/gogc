@@ -42,4 +42,5 @@ const (
 type UeDataInfo struct {
 	UeIdInfo     model.UeIdentityInfo             `json:"ueidinfo,omitempty" json:"ueidinfo,omitempty"`
 	AmfAccessReg *model.Amf3GppAccessRegistration `json:"amfaccessreg,omitempty" json:"amfaccessreg,omitempty"`
+	AccessMobilityData *model.AccessAndMobilityData `json:"accessmobilitydata,omitempty" json:"accessmobilitydata,omitempty"`
 }
