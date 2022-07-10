@@ -56,12 +56,46 @@ func CreateOrReplaceAccessAndMobilityData(c *gin.Context) {
 
 // DeleteAccessAndMobilityData - Deletes the access and mobility exposure data for a UE
 func DeleteAccessAndMobilityData(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{})
+
+	logger.Debug("DeleteAccessAndMobilityData START")
+	defer logger.Debug("DeleteAccessAndMobilityData END")
+
+	// Get Parameter
+	request := signal.RequestInit(c)
+	request.Params["ueId"] = c.Param("ueId")
+	logger.Debug("request:%#+v", request)
+
+	// Call Scenario Function
+	response, err := scenario.DeleteAccessAndMobilityData(request)
+	logger.Debug("response:%#+v, err:%v", response, err)
+
+	if err == nil {
+		c.JSON(http.StatusOK, response)
+	} else {
+		c.JSON(http.StatusNotFound, response)
+	}
 }
 
 // QueryAccessAndMobilityData - Retrieves the access and mobility exposure data for a UE
 func QueryAccessAndMobilityData(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{})
+
+	logger.Debug("QueryAccessAndMobilityData START")
+	defer logger.Debug("QueryAccessAndMobilityData END")
+
+	// Get Parameter
+	request := signal.RequestInit(c)
+	request.Params["ueId"] = c.Param("ueId")
+	logger.Debug("request:%#+v", request)
+
+	// Call Scenario Function
+	response, err := scenario.QueryAccessAndMobilityData(request)
+	logger.Debug("response:%#+v, err:%v", response, err)
+
+	if err == nil {
+		c.JSON(http.StatusOK, response)
+	} else {
+		c.JSON(http.StatusNotFound, response)
+	}
 }
 
 // UpdateAccessAndMobilityData - Updates the access and mobility exposure data for a UE
