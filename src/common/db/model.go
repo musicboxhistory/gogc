@@ -21,4 +21,5 @@ const (
 const (
 	EquipmentStatus = "equipmentstatus"
 	UeDataInfo      = "uedatainfo"
+	NFProfile       = "nfprofile"
 )

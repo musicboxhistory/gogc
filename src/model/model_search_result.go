@@ -11,9 +11,9 @@ package model
 
 // SearchResult - Contains the list of NF Profiles returned in a Discovery response
 type SearchResult struct {
-	ValidityPeriod int32 `json:"validityPeriod,omitempty"`
+	ValidityPeriod *int32 `json:"validityPeriod,omitempty"`
 
-	NfInstances []NfProfile `json:"nfInstances"`
+	NfInstances *[]NfProfile `json:"nfInstances"`
 
 	SearchId *string `json:"searchId,omitempty"`
 

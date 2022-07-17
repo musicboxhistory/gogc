@@ -25,7 +25,7 @@ func main() {
 
 	port := os.Getenv("ENV_NRF_NFDISCOVERY_PORT")
 	if port == "" {
-		port = "8082"
+		port = "8503"
 	}
 	port = ":" + port
 

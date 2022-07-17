@@ -11,6 +11,7 @@ package handler
 
 import (
 	"gogc/src/common/logger"
+	"gogc/src/common/signal"
 	"gogc/src/model"
 	"gogc/src/nrf/NFDiscovery/scenario"
 	"net/http"
@@ -25,8 +26,7 @@ func SearchNFInstances(c *gin.Context) {
 	defer logger.Debug("SearchNFInstances END")
 
 	// Get Parameter
-	request := model.Request{}
-	request.Query = c.Request.URL.Query()
+	request := signal.RequestInit(c)
 	logger.Debug("request:%#+v", request)
 
 	// Check Mandatory Parameter
