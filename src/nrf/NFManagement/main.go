@@ -11,6 +11,7 @@ package main
 
 import (
 	sw "gogc/src/nrf/NFManagement/handler"
+	"gogc/src/nrf/NFManagement/scenario"
 	"log"
 	"os"
 )
@@ -19,6 +20,7 @@ func main() {
 	log.Printf("Server started")
 
 	// Init
+	scenario.Init()
 	router := sw.NewRouter()
 
 	port := os.Getenv("ENV_NRF_NFMANAGEMENT_PORT")

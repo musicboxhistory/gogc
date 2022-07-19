@@ -133,7 +133,7 @@ func PutNFInstance(request model.Request, nfProfile *model.NfProfile) error {
 	// Find DB
 	filter := GetFilter(request)
 	logger.Debug("filter:%#v", filter)
-	_, err := db.FindOne(db.DatabaseUdr, db.UeDataInfo, filter)
+	_, err := db.FindOne(db.DatabaseNrf, db.NFProfile, filter)
 
 	if err == nil {
 		// Update DB
@@ -175,7 +175,7 @@ func DeleteNFInstance(request model.Request) error {
 	// Find DB
 	filter := GetFilter(request)
 	logger.Debug("filter:%#v", filter)
-	_, err := db.FindOne(db.DatabaseUdr, db.UeDataInfo, filter)
+	_, err := db.FindOne(db.DatabaseNrf, db.NFProfile, filter)
 
 	if err != nil {
 		logger.Debug("err:%v", err)
