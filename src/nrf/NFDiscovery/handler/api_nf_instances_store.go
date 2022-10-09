@@ -31,7 +31,7 @@ func SearchNFInstances(c *gin.Context) {
 
 	// Check Mandatory Parameter
 	if request.Query["target-nf-type"] == nil || request.Query["requester-nf-type"] == nil {
-		status := http.StatusBadRequest
+		status := int32(http.StatusBadRequest)
 		detail := scenario.ErrorDetailMandatoryIeIncorrect
 		cause := scenario.MandatoryIeIncorrect
 		response := model.ProblemDetails{Status: &status, Detail: &detail, Cause: &cause}

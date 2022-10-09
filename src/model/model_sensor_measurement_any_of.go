@@ -13,7 +13,6 @@ type SensorMeasurementAnyOf string
 
 // List of SensorMeasurementAnyOf
 const (
-	BAROMETRIC_PRESSURE SensorMeasurementAnyOf = "BAROMETRIC_PRESSURE"
 	UE_SPEED            SensorMeasurementAnyOf = "UE_SPEED"
 	UE_ORIENTATION      SensorMeasurementAnyOf = "UE_ORIENTATION"
 )

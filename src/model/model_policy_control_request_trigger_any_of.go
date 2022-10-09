@@ -46,7 +46,6 @@ const (
 	QOS_MONITORING                   PolicyControlRequestTriggerAnyOf = "QOS_MONITORING"
 	SCELL_CH                         PolicyControlRequestTriggerAnyOf = "SCELL_CH"
 	USER_LOCATION_CH                 PolicyControlRequestTriggerAnyOf = "USER_LOCATION_CH"
-	EPS_FALLBACK                     PolicyControlRequestTriggerAnyOf = "EPS_FALLBACK"
 	MA_PDU                           PolicyControlRequestTriggerAnyOf = "MA_PDU"
 	TSN_BRIDGE_INFO                  PolicyControlRequestTriggerAnyOf = "TSN_BRIDGE_INFO"
 	_5_G_RG_JOIN                     PolicyControlRequestTriggerAnyOf = "5G_RG_JOIN"

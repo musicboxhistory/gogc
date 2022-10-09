@@ -16,7 +16,7 @@ func GetEquipmentStatus(request model.Request) (interface{}, error) {
 	response := GetStatus(request)
 	if response.Status == "" {
 		// Set Error Details
-		status := http.StatusNotFound
+		status := int32(http.StatusNotFound)
 		detail := ErrorDetailEquipmentUnknown
 		cause := EquipmentUnknown
 		problemDetail := model.ProblemDetails{Status: &status, Detail: &detail, Cause: &cause}

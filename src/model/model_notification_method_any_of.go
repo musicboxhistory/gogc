@@ -13,7 +13,6 @@ type NotificationMethodAnyOf string
 
 // List of NotificationMethodAnyOf
 const (
-	PERIODIC           NotificationMethodAnyOf = "PERIODIC"
 	ONE_TIME           NotificationMethodAnyOf = "ONE_TIME"
 	ON_EVENT_DETECTION NotificationMethodAnyOf = "ON_EVENT_DETECTION"
 )

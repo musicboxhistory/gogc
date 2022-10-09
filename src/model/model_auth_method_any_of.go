@@ -17,5 +17,4 @@ const (
 	EAP_AKA_PRIME AuthMethodAnyOf = "EAP_AKA_PRIME"
 	EAP_TLS       AuthMethodAnyOf = "EAP_TLS"
 	EAP_TTLS      AuthMethodAnyOf = "EAP_TTLS"
-	NONE          AuthMethodAnyOf = "NONE"
 )

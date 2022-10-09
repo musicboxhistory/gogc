@@ -11,9 +11,3 @@ package model
 
 type SmsSupportAnyOf string
 
-// List of SmsSupportAnyOf
-const (
-	_3_GPP    SmsSupportAnyOf = "3GPP"
-	NON_3_GPP SmsSupportAnyOf = "NON_3GPP"
-	BOTH      SmsSupportAnyOf = "BOTH"
-)

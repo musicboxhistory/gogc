@@ -77,7 +77,7 @@ func NSSAIAvailabilityPut(request model.Request, nfProfile *model.NfProfile) (in
 func DeleteNSSAIAvailability(request model.Request) (*model.NfProfile, error) {
 
 	logger.Debug("DeleteNSSAIAvailability START")
-	defer logger.Debug("FindNFInstance END")
+	defer logger.Debug("DeleteNSSAIAvailability END")
 
 	// Find DB
 	filter := GetFilter(request)
@@ -104,10 +104,40 @@ func DeleteNSSAIAvailability(request model.Request) (*model.NfProfile, error) {
 	return &response, nil
 }
 
-func PutNFInstance(request model.Request, nfProfile *model.NfProfile) error {
+func PatchNSSAIAvailability(request model.Request) (*model.NfProfile, error) {
 
-	logger.Debug("PutNFInstance START")
-	defer logger.Debug("PutNFInstance END")
+	logger.Debug("PatchNSSAIAvailability START")
+	defer logger.Debug("PatchNSSAIAvailability END")
+
+	// Find DB
+	filter := GetFilter(request)
+	logger.Debug("filter:%#v", filter)
+	result, err := db.FindOne(db.DatabaseNrf, db.NFProfile, filter)
+	if err != nil {
+		logger.Error("err:%v", err)
+		return nil, err
+	}
+
+	// Bson Marshal
+	data, err := bson.Marshal(result)
+	if err != nil {
+		logger.Error("err:%v", err)
+		return nil, err
+	}
+	response := model.NfProfile{}
+	err = bson.Unmarshal(data, &response)
+	if err != nil {
+		logger.Error("err:%v", err)
+		return nil, err
+	}
+
+	return &response, nil
+}
+
+func PutNSSAIAvailability(request model.Request, nfProfile *model.NfProfile) error {
+
+	logger.Debug("PutNSSAIAvailability START")
+	defer logger.Debug("PutNSSAIAvailability END")
 
 	// Find DB
 	filter := GetFilter(request)
@@ -131,40 +161,6 @@ func PutNFInstance(request model.Request, nfProfile *model.NfProfile) error {
 			return err
 		}
 	} else {
-		logger.Error("err:%v", err)
-		return err
-	}
-
-	return nil
-}
-
-func PatchNFInstance(request model.Request, nfProfile *model.NfProfile) (*model.NfProfile, error) {
-
-	logger.Debug("PatchNFInstance START")
-	defer logger.Debug("PatchNFInstance END")
-
-	return nil, nil
-}
-
-func DeleteNFInstance(request model.Request) error {
-
-	logger.Debug("DeleteNFInstance START")
-	defer logger.Debug("DeleteNFInstance END")
-
-	// Find DB
-	filter := GetFilter(request)
-	logger.Debug("filter:%#v", filter)
-	_, err := db.FindOne(db.DatabaseNrf, db.NFProfile, filter)
-
-	if err != nil {
-		logger.Debug("err:%v", err)
-		return err
-	}
-
-	// Delete DB
-	logger.Debug("Update DB")
-	_, err = db.DeleteOne(db.DatabaseNrf, db.NFProfile, filter)
-	if err != nil {
 		logger.Error("err:%v", err)
 		return err
 	}

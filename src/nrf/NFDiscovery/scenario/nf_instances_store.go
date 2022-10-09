@@ -19,7 +19,7 @@ func SearchNFInstances(request model.Request) (interface{}, error) {
 	response, err := FindNFInstances(request)
 	if err != nil {
 		// Set Error Details
-		status := http.StatusNotFound
+		status := int32(http.StatusNotFound)
 		detail := ErrorDetailTargetUnknown
 		cause := TargetUnknown
 		problemDetail := model.ProblemDetails{Status: &status, Detail: &detail, Cause: &cause}

@@ -15,7 +15,6 @@ type SmsDeliveryStatus string
 // List of SmsDeliveryStatus
 const (
 	PENDING       SmsDeliveryStatus = "SMS_DELIVERY_PENDING"
-	COMPLETED     SmsDeliveryStatus = "SMS_DELIVERY_COMPLETED"
 	FAILED        SmsDeliveryStatus = "SMS_DELIVERY_FAILED"
 	SMSF_ACCEPTED SmsDeliveryStatus = "SMS_DELIVERY_SMSF_ACCEPTED"
 )

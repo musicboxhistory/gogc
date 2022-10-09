@@ -20,7 +20,7 @@ func DeregisterNFInstance(request model.Request) (interface{}, error) {
 	err := DeleteNFInstance(request)
 	if err != nil {
 		// Set Error Details
-		status := http.StatusNotFound
+		status := int32(http.StatusNotFound)
 		detail := ErrorDetailEquipmentUnknown
 		cause := EquipmentUnknown
 		problemDetail := model.ProblemDetails{Status: &status, Detail: &detail, Cause: &cause}
@@ -41,7 +41,7 @@ func GetNFInstance(request model.Request) (interface{}, error) {
 	response, err := FindNFInstance(request)
 	if err != nil {
 		// Set Error Details
-		status := http.StatusNotFound
+		status := int32(http.StatusNotFound)
 		detail := ErrorDetailEquipmentUnknown
 		cause := EquipmentUnknown
 		problemDetail := model.ProblemDetails{Status: &status, Detail: &detail, Cause: &cause}
@@ -62,7 +62,7 @@ func RegisterNFInstance(request model.Request, nfProfile *model.NfProfile) (inte
 	err := PutNFInstance(request, nfProfile)
 	if err != nil {
 		// Set Error Details
-		status := http.StatusNotFound
+		status := int32(http.StatusNotFound)
 		detail := ErrorDetailEquipmentUnknown
 		cause := EquipmentUnknown
 		problemDetail := model.ProblemDetails{Status: &status, Detail: &detail, Cause: &cause}
@@ -83,7 +83,7 @@ func UpdateNFInstance(request model.Request, nfProfile *model.NfProfile) (interf
 	response, err := PatchNFInstance(request, nfProfile)
 	if err != nil {
 		// Set Error Details
-		status := http.StatusNotFound
+		status := int32(http.StatusNotFound)
 		detail := ErrorDetailEquipmentUnknown
 		cause := EquipmentUnknown
 		problemDetail := model.ProblemDetails{Status: &status, Detail: &detail, Cause: &cause}
@@ -183,7 +183,7 @@ func DeleteNFInstance(request model.Request) error {
 	}
 
 	// Delete DB
-	logger.Debug("Update DB")
+	logger.Debug("Delete DB")
 	_, err = db.DeleteOne(db.DatabaseNrf, db.NFProfile, filter)
 	if err != nil {
 		logger.Error("err:%v", err)
