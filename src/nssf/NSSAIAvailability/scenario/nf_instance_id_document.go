@@ -82,7 +82,7 @@ func DeleteNSSAIAvailability(request model.Request) (*model.NfProfile, error) {
 	// Find DB
 	filter := GetFilter(request)
 	logger.Debug("filter:%#v", filter)
-	result, err := db.FindOne(db.DatabaseNrf, db.NFProfile, filter)
+	result, err := db.FindOne(db.DatabaseNssf, db.NFProfile, filter)
 	if err != nil {
 		logger.Error("err:%v", err)
 		return nil, err
@@ -112,7 +112,7 @@ func PatchNSSAIAvailability(request model.Request) (*model.NfProfile, error) {
 	// Find DB
 	filter := GetFilter(request)
 	logger.Debug("filter:%#v", filter)
-	result, err := db.FindOne(db.DatabaseNrf, db.NFProfile, filter)
+	result, err := db.FindOne(db.DatabaseNssf, db.NFProfile, filter)
 	if err != nil {
 		logger.Error("err:%v", err)
 		return nil, err
@@ -147,7 +147,7 @@ func PutNSSAIAvailability(request model.Request, nfProfile *model.NfProfile) err
 	if err == nil {
 		// Update DB
 		logger.Debug("Update DB")
-		_, err = db.UpdataOne(db.DatabaseNrf, db.NFProfile, filter, nfProfile)
+		_, err = db.UpdataOne(db.DatabaseNssf, db.NFProfile, filter, nfProfile)
 		if err != nil {
 			logger.Error("err:%v", err)
 			return err
@@ -155,7 +155,7 @@ func PutNSSAIAvailability(request model.Request, nfProfile *model.NfProfile) err
 	} else if err == mongo.ErrNoDocuments {
 		// Insert DB
 		logger.Debug("Insert DB")
-		_, err = db.InsertOne(db.DatabaseNrf, db.NFProfile, nfProfile)
+		_, err = db.InsertOne(db.DatabaseNssf, db.NFProfile, nfProfile)
 		if err != nil {
 			logger.Error("err:%v", err)
 			return err

@@ -19,28 +19,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// DeregisterNFInstance - Deregisters a given NF Instance
-func DeregisterNFInstance(c *gin.Context) {
-
-	logger.Debug("DeregisterNFInstance START")
-	defer logger.Debug("DeregisterNFInstance END")
-
-	// Get Parameter
-	request := signal.RequestInit(c)
-	request.Params["nfInstanceID"] = c.Param("nfInstanceID")
-	logger.Debug("request:%#+v", request)
-
-	// Call Scenario Function
-	response, err := scenario.DeregisterNFInstance(request)
-	logger.Debug("response:%#+v, err:%v", response, err)
-
-	if err == nil {
-		c.JSON(http.StatusOK, response)
-	} else {
-		c.JSON(http.StatusNotFound, response)
-	}
-}
-
 // GetNFInstance - Read the profile of a given NF Instance
 func GetNFInstance(c *gin.Context) {
 
@@ -104,8 +82,8 @@ func UpdateNFInstance(c *gin.Context) {
 	request.Params["nfInstanceID"] = c.Param("nfInstanceID")
 	logger.Debug("request:%#+v", request)
 
-	nfProfile := model.NfProfile{}
-	err := c.ShouldBindJSON(&nfProfile)
+	patchData := []model.PatchItem{}
+	err := c.ShouldBindJSON(&patchData)
 	if err != nil {
 		logger.Error("err:%v", err)
 		c.JSON(http.StatusBadRequest, gin.H{})
@@ -113,12 +91,34 @@ func UpdateNFInstance(c *gin.Context) {
 	}
 
 	// Call Scenario Function
-	response, err := scenario.UpdateNFInstance(request, &nfProfile)
+	response, err := scenario.UpdateNFInstance(request, &patchData)
 	logger.Debug("response:%#+v, err:%v", response, err)
 
 	if err == nil {
-		c.JSON(http.StatusCreated, nfProfile)
+		c.JSON(http.StatusCreated, patchData)
 	} else {
 		c.JSON(http.StatusBadRequest, response)
+	}
+}
+
+// DeregisterNFInstance - Deregisters a given NF Instance
+func DeregisterNFInstance(c *gin.Context) {
+
+	logger.Debug("DeregisterNFInstance START")
+	defer logger.Debug("DeregisterNFInstance END")
+
+	// Get Parameter
+	request := signal.RequestInit(c)
+	request.Params["nfInstanceID"] = c.Param("nfInstanceID")
+	logger.Debug("request:%#+v", request)
+
+	// Call Scenario Function
+	response, err := scenario.DeregisterNFInstance(request)
+	logger.Debug("response:%#+v, err:%v", response, err)
+
+	if err == nil {
+		c.JSON(http.StatusOK, response)
+	} else {
+		c.JSON(http.StatusNotFound, response)
 	}
 }
