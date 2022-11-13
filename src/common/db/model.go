@@ -19,7 +19,8 @@ const (
 
 // Collections
 const (
-	EquipmentStatus = "equipmentstatus"
-	UeDataInfo      = "uedatainfo"
-	NFProfile       = "nfprofile"
+	EquipmentStatus  = "equipmentstatus"
+	UeDataInfo       = "uedatainfo"
+	NFProfile        = "nfprofile"
+	SubscriptionData = "subscriptiondata"
 )

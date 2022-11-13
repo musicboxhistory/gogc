@@ -17,10 +17,52 @@ import (
 
 // RemoveSubscription - Deletes a subscription
 func RemoveSubscription(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{})
+
+	logger.Debug("DeregisterNFInstance START")
+	defer logger.Debug("DeregisterNFInstance END")
+
+	// Get Parameter
+	request := signal.RequestInit(c)
+    request.Params["subscriptionID"] = c.Param("subscriptionID")
+	logger.Debug("request:%#+v", request)
+
+	// Call Scenario Function
+    response, err := scenario.RemoveSubscription(request)
+	logger.Debug("response:%#+v, err:%v", response, err)
+
+	if err == nil {
+		c.JSON(http.StatusOK, response)
+	} else {
+		c.JSON(http.StatusNotFound, response)
+	}
 }
 
 // UpdateSubscription - Updates a subscription
 func UpdateSubscription(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{})
+
+	logger.Debug("UpdateSubscription START")
+	defer logger.Debug("UpdateSubscription END")
+
+	// Get Parameter
+	request := signal.RequestInit(c)
+    request.Params["subscriptionID"] = c.Param("subscriptionID")
+	logger.Debug("request:%#+v", request)
+
+	patchData := []model.PatchItem{}
+	err := c.ShouldBindJSON(&patchData)
+	if err != nil {
+		logger.Error("err:%v", err)
+		c.JSON(http.StatusBadRequest, gin.H{})
+		return
+	}
+
+	// Call Scenario Function
+	response, err := scenario.UpdateSubscription(request, &patchData)
+	logger.Debug("response:%#+v, err:%v", response, err)
+
+	if err == nil {
+		c.JSON(http.StatusCreated, patchData)
+	} else {
+		c.JSON(http.StatusBadRequest, response)
+	}
 }

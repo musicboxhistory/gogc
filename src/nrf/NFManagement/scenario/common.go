@@ -19,8 +19,15 @@ func Init() {
 
 func GetFilter(request model.Request) bson.D {
 
-	nfInstanceID := request.Params["nfInstanceID"]
-	filter := bson.D{primitive.E{Key: "nfInstanceID", Value: nfInstanceID}}
+	var filter bson.D
+
+	if request.Params["nfInstanceID"] != "" {
+		nfInstanceID := request.Params["nfInstanceID"]
+		filter = bson.D{primitive.E{Key: "nfInstanceID", Value: nfInstanceID}}
+	} else if request.Params["subscriptionID"] != "" {
+		subscriptionID := request.Params["subscriptionID"]
+		filter = bson.D{primitive.E{Key: "subscriptionID", Value: subscriptionID}}
+	}
 
 	return filter
 }

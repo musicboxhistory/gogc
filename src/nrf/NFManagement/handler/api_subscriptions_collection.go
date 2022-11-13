@@ -17,5 +17,29 @@ import (
 
 // CreateSubscription - Create a new subscription
 func CreateSubscription(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{})
+
+	logger.Debug("CreateSubscription START")
+	defer logger.Debug("CreateSubscription END")
+
+	// Get Parameter
+	request := signal.RequestInit(c)
+	logger.Debug("request:%#+v", request)
+
+	subscriptionData := model.SubscriptionData{}
+	err := c.ShouldBindJSON(&subscriptionData)
+	if err != nil {
+		logger.Error("err:%v", err)
+		c.JSON(http.StatusBadRequest, gin.H{})
+		return
+	}
+
+	// Call Scenario Function
+	response, err := scenario.CreateSubscription(request, &subscriptionData)
+	logger.Debug("response:%#+v, err:%v", response, err)
+
+	if err == nil {
+		c.JSON(http.StatusCreated, subscriptionData)
+	} else {
+		c.JSON(http.StatusBadRequest, response)
+	}
 }
