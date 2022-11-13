@@ -10,6 +10,11 @@
 package openapi
 
 import (
+	"gogc/src/common/logger"
+	"gogc/src/common/signal"
+	"gogc/src/model"
+	"gogc/src/nrf/NFManagement/scenario"
+
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -23,11 +28,11 @@ func RemoveSubscription(c *gin.Context) {
 
 	// Get Parameter
 	request := signal.RequestInit(c)
-    request.Params["subscriptionID"] = c.Param("subscriptionID")
+	request.Params["subscriptionID"] = c.Param("subscriptionID")
 	logger.Debug("request:%#+v", request)
 
 	// Call Scenario Function
-    response, err := scenario.RemoveSubscription(request)
+	response, err := scenario.RemoveSubscription(request)
 	logger.Debug("response:%#+v, err:%v", response, err)
 
 	if err == nil {
@@ -45,7 +50,7 @@ func UpdateSubscription(c *gin.Context) {
 
 	// Get Parameter
 	request := signal.RequestInit(c)
-    request.Params["subscriptionID"] = c.Param("subscriptionID")
+	request.Params["subscriptionID"] = c.Param("subscriptionID")
 	logger.Debug("request:%#+v", request)
 
 	patchData := []model.PatchItem{}
